@@ -58,7 +58,8 @@
    methods: {
      toggleDrawer() {
        this.drawerOpened = !this.drawerOpened;
-     }
+     },
+
    }
  })
 </script>

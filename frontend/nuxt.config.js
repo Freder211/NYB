@@ -1,11 +1,12 @@
 export default {
-  modules: [
-    '@nuxtjs/vuetify',
-  ],
+	buildModules: ['@nuxt/typescript-build'],
+	modules: [
+		'@nuxtjs/vuetify',
+	],
 
-  vuetify: {
-    theme: {
-      dark: true,
-    }
-  }
+	vuetify: {
+		theme: {
+			dark: true,
+		}
+	}
 }
