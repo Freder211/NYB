@@ -8,13 +8,13 @@
 		>
 			<v-list>
 				<v-list-item
-					v-for="section in sections"
-					:key="section.name"
+					v-for="(section,index) in sections"
+					:key="index"
 					router
-					:to="section.path"
+					:to="index"
 				>
 					<v-list-item-content>
-						<v-list-item-title v-text="section.name" />
+						<v-list-item-title v-text="section" />
 					</v-list-item-content>
 				</v-list-item>
 			</v-list>
@@ -27,7 +27,7 @@
 		>
 			<v-app-bar-nav-icon @click="toggleDrawer" />
 			<v-row class="d-flex justify-center ">
-				<v-toolbar-title>Site title</v-toolbar-title>
+				<v-toolbar-title>Current group title ({{currentSectionName}})</v-toolbar-title>
 			</v-row>
 
 		</v-app-bar>
@@ -44,33 +44,35 @@ import Vue from 'vue'
 export default Vue.extend({
 	data() {
 		return {
-			sections: [
-				{
-					path: "/",
-					name: "Dashboard"
-				},
-				{
-					path: "/comunications",
-					name: "Comunicazioni"
-				},
-				{
-					path: "/schemes",
-					name: "Schemi"
-				},
-				{
-					path: "/todos",
-					name: "TODO's"
-				},
-				{
-					path: "/pro-cons",
-					name: "Pro & Cons"
-				},
-			],
+			sections: {
+				'/': 'Dashboard',
+				'/comunications': "Comunicazioni",
+				'/schemes': "Schemi",
+				'/todos': "TODO's",
+				'/pro-cons': "Pro % Cons"
+			} as unknown as string[],
+
 			drawerOpened: true,
 		};
 	},
 
+
+
+	computed: {
+
+		currentSectionName(): string {
+			const path: string = this.$route.path
+			if (!path)
+				return ''
+			return this.sections[path]
+		}
+
+	},
+
+
+
 	methods: {
+
 		toggleDrawer() {
 			this.drawerOpened = !this.drawerOpened;
 		},
