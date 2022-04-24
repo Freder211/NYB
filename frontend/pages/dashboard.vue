@@ -1,11 +1,11 @@
 <template>
-	<h1>MIAO</h1>
+	<h1>Dashboard template</h1>
 
 </template>
 
 <script lang="ts">
 import Vue from 'vue'
 export default Vue.extend({
-	layout: "default",
+	layout: "default"
 })
 </script>

@@ -1,3 +1,12 @@
 <template>
-  <h1>MIAO</h1>
+	<h1>aa</h1>
 </template>
+<script>
+export default {
+	middleware({ $auth, redirect }) {
+		redirect("/dashboard")
+
+	}
+}
+
+</script>

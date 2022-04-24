@@ -45,22 +45,20 @@ export default Vue.extend({
 	data() {
 		return {
 			sections: {
-				'/': 'Dashboard',
+				'/dashboard': 'Dashboard',
 				'/comunications': "Comunicazioni",
 				'/schemes': "Schemi",
 				'/todos': "TODO's",
-				'/pro-cons': "Pro % Cons"
+				'pro-cons': "Pro % Cons"
 			} as unknown as string[],
 
 			drawerOpened: true,
 		};
 	},
 
-
-
 	computed: {
 
-		currentSectionName(): string {
+		currentSectionName(): string | undefined {
 			const path: string = this.$route.path
 			if (!path)
 				return ''
@@ -68,8 +66,6 @@ export default Vue.extend({
 		}
 
 	},
-
-
 
 	methods: {
 
