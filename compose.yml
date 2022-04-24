@@ -1,0 +1,8 @@
+services:
+  frontend:
+    build: ./frontend/
+    volumes:
+      - ./frontend/:/app/
+    command: ["sh", "run_dev.sh"]
+    ports:
+      - "3000:3000"
