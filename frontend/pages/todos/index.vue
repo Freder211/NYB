@@ -2,7 +2,7 @@
 	<v-data-table
 		:headers="headers"
 		:items="desserts"
-		sort-by="calories"
+		sort-by="name"
 		@dblclick:row="goToDetails"
 		class="elevation-1"
 	>
@@ -106,6 +106,7 @@
 			>
 				mdi-delete
 			</v-icon>
+
 		</template>
 		<template v-slot:no-data>
 			<v-btn
@@ -128,11 +129,35 @@ export default Vue.extend({
 		headers: [
 			{
 				text: 'Todo\'s Name',
-				align: 'start',
 				sortable: true,
+				align: 'center',
 				value: 'name',
 
 			},
+			{
+				text: 'N° of Pros',
+				sortable: true,
+				value: 'npro',
+				align: 'start',
+
+
+			},
+			{
+				text: 'N° of Cons',
+				sortable: true,
+				value: 'ncons',
+				align: 'start',
+
+
+			},
+			{
+				text: 'Actions',
+				value: 'actions',
+				sortable: false,
+				align: 'center'
+			},
+
+
 
 		],
 		desserts: [],
