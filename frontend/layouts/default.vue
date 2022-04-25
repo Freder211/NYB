@@ -49,7 +49,7 @@ export default Vue.extend({
 				'/comunications': "Comunicazioni",
 				'/schemes': "Schemi",
 				'/todos': "TODO's",
-				'pro-cons': "Pro % Cons"
+				'pro-cons': "Pro & Cons"
 			} as unknown as string[],
 
 			drawerOpened: true,

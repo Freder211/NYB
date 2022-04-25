@@ -2,10 +2,29 @@
 	<v-data-table
 		:headers="headers"
 		:items="desserts"
-		sort-by="calories"
+		sort-by="name"
 		@dblclick:row="goToDetails"
 		class="elevation-1"
 	>
+
+		<template v-slot:item.ncons="{ item }">
+			<v-chip
+				:color="'red'"
+				dark
+			>
+				{{ item.ncons }}
+			</v-chip>
+		</template>
+
+		<template v-slot:item.npros="{ item }">
+			<v-chip
+				:color="'green'"
+				dark
+			>
+				{{ item.npros }}
+			</v-chip>
+		</template>
+
 		<template v-slot:top>
 			<v-toolbar flat>
 				<v-toolbar-title>TODO's</v-toolbar-title>
@@ -106,6 +125,7 @@
 			>
 				mdi-delete
 			</v-icon>
+
 		</template>
 		<template v-slot:no-data>
 			<v-btn
@@ -127,12 +147,36 @@ export default Vue.extend({
 		dialogDelete: false,
 		headers: [
 			{
-				text: 'Dessert (100g serving)',
-				align: 'start',
+				text: 'Todo\'s Name',
 				sortable: true,
+				align: 'center',
 				value: 'name',
 
 			},
+			{
+				text: 'N° of Pros',
+				sortable: true,
+				value: 'npros',
+				align: 'start',
+
+
+			},
+			{
+				text: 'N° of Cons',
+				sortable: true,
+				value: 'ncons',
+				align: 'start',
+
+
+			},
+			{
+				text: 'Actions',
+				value: 'actions',
+				sortable: false,
+				align: 'center'
+			},
+
+
 
 		],
 		desserts: [],
@@ -170,44 +214,66 @@ export default Vue.extend({
 		initialize() {
 			this.desserts = [
 				{
+					id: 1,
 					name: 'Frozen Yogurt',
+					ncons: 4,
+					npros: 999
 
 				},
 				{
+					id: 2,
 					name: 'Ice cream sandwich',
-
+					ncons: 4,
+					npros: 999
 				},
 				{
+					id: 3,
 					name: 'Eclair',
-
+					ncons: 4,
+					npros: 999
 				},
 				{
+					id: 4,
 					name: 'Cupcake',
-
+					ncons: 4,
+					npros: 999
 				},
 				{
+					id: 5,
 					name: 'Gingerbread',
-
+					ncons: 4,
+					npros: 999
 				},
 				{
+					id: 6,
 					name: 'Jelly bean',
+					ncons: 4,
+					npros: 999
 				},
 
 				{
+					id: 7,
 					name: 'Lollipop',
-
+					ncons: 4,
+					npros: 999
 				},
 				{
+					id: 8,
 					name: 'Honeycomb',
-
+					ncons: 4,
+					npros: 999
 				},
 				{
+					id: 9,
 					name: 'Donut',
-
+					ncons: 4,
+					npros: 999
 				},
 				{
+					id: 10,
 					name: 'KitKat',
-
+					ncons: 4,
+					npros: 999
 				},
 			] as unknown
 		},
@@ -254,9 +320,12 @@ export default Vue.extend({
 			this.close()
 		},
 
-		goToDetails() {
+		goToDetails(event: any, { item }) {
+			this.$nuxt.$router.push('/todos/' + item.id)
 
 		}
+
+
 	},
 })
 </script>
