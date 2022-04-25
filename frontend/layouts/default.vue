@@ -27,7 +27,7 @@
 		>
 			<v-app-bar-nav-icon @click="toggleDrawer" />
 			<v-row class="d-flex justify-center ">
-				<v-toolbar-title>Current group title ({{currentSectionName}})</v-toolbar-title>
+				<v-toolbar-title>You are currently looking at {{currentSectionName}}</v-toolbar-title>
 			</v-row>
 
 		</v-app-bar>
@@ -46,8 +46,8 @@ export default Vue.extend({
 		return {
 			sections: {
 				'/dashboard': 'Dashboard',
-				'/comunications': "Comunicazioni",
-				'/schemes': "Schemi",
+				'/comunications': "Comunications",
+				'/schemes': "Schemes",
 				'/todos': "TODO's",
 				'pro-cons': "Pro & Cons"
 			} as unknown as string[],
