@@ -127,7 +127,7 @@ export default Vue.extend({
 		dialogDelete: false,
 		headers: [
 			{
-				text: 'Dessert (100g serving)',
+				text: 'Todo\'s Name',
 				align: 'start',
 				sortable: true,
 				value: 'name',
