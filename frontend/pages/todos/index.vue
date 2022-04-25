@@ -170,42 +170,52 @@ export default Vue.extend({
 		initialize() {
 			this.desserts = [
 				{
+					id: 1,
 					name: 'Frozen Yogurt',
 
 				},
 				{
+					id: 2,
 					name: 'Ice cream sandwich',
 
 				},
 				{
+					id: 3,
 					name: 'Eclair',
 
 				},
 				{
+					id: 4,
 					name: 'Cupcake',
 
 				},
 				{
+					id: 5,
 					name: 'Gingerbread',
 
 				},
 				{
+					id: 6,
 					name: 'Jelly bean',
 				},
 
 				{
+					id: 7,
 					name: 'Lollipop',
 
 				},
 				{
+					id: 8,
 					name: 'Honeycomb',
 
 				},
 				{
+					id: 9,
 					name: 'Donut',
 
 				},
 				{
+					id: 10,
 					name: 'KitKat',
 
 				},
@@ -254,7 +264,8 @@ export default Vue.extend({
 			this.close()
 		},
 
-		goToDetails() {
+		goToDetails(event: any, { item }) {
+			this.$nuxt.$router.push('/todos/' + item.id)
 
 		}
 	},

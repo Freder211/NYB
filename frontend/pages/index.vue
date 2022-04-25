@@ -1,5 +1,5 @@
 <template>
-	<h1>aa</h1>
+	<h1>useless page</h1>
 </template>
 <script>
 export default {
