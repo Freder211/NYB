@@ -6,6 +6,25 @@
 		@dblclick:row="goToDetails"
 		class="elevation-1"
 	>
+
+		<template v-slot:item.ncons="{ item }">
+			<v-chip
+				:color="'red'"
+				dark
+			>
+				{{ item.ncons }}
+			</v-chip>
+		</template>
+
+		<template v-slot:item.npros="{ item }">
+			<v-chip
+				:color="'green'"
+				dark
+			>
+				{{ item.npros }}
+			</v-chip>
+		</template>
+
 		<template v-slot:top>
 			<v-toolbar flat>
 				<v-toolbar-title>TODO's</v-toolbar-title>
@@ -137,7 +156,7 @@ export default Vue.extend({
 			{
 				text: 'N° of Pros',
 				sortable: true,
-				value: 'npro',
+				value: 'npros',
 				align: 'start',
 
 
@@ -197,52 +216,64 @@ export default Vue.extend({
 				{
 					id: 1,
 					name: 'Frozen Yogurt',
+					ncons: 4,
+					npros: 999
 
 				},
 				{
 					id: 2,
 					name: 'Ice cream sandwich',
-
+					ncons: 4,
+					npros: 999
 				},
 				{
 					id: 3,
 					name: 'Eclair',
-
+					ncons: 4,
+					npros: 999
 				},
 				{
 					id: 4,
 					name: 'Cupcake',
-
+					ncons: 4,
+					npros: 999
 				},
 				{
 					id: 5,
 					name: 'Gingerbread',
-
+					ncons: 4,
+					npros: 999
 				},
 				{
 					id: 6,
 					name: 'Jelly bean',
+					ncons: 4,
+					npros: 999
 				},
 
 				{
 					id: 7,
 					name: 'Lollipop',
-
+					ncons: 4,
+					npros: 999
 				},
 				{
 					id: 8,
 					name: 'Honeycomb',
-
+					ncons: 4,
+					npros: 999
 				},
 				{
 					id: 9,
 					name: 'Donut',
-
+					ncons: 4,
+					npros: 999
 				},
 				{
 					id: 10,
 					name: 'KitKat',
-
+					ncons: 4,
+					npros: 999
 				},
 			] as unknown
 		},
@@ -293,6 +324,8 @@ export default Vue.extend({
 			this.$nuxt.$router.push('/todos/' + item.id)
 
 		}
+
+
 	},
 })
 </script>
