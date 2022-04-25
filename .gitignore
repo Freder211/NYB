@@ -12,3 +12,7 @@ yarn-error.log*
 .npm
 .eslintcache
 .nuxt/
+
+__py_cache__
+*.pyc
+*.sqlite3
