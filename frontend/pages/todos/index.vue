@@ -4,7 +4,7 @@
 		:items="desserts"
 		sort-by="name"
 		@dblclick:row="goToDetails"
-		class="elevation-1"
+		class="elevation-1 mx-4 mt-4"
 	>
 
 		<template v-slot:item.ncons="{ item }">
