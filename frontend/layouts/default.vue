@@ -70,6 +70,7 @@ export default Vue.extend({
 	methods: {
 
 		toggleDrawer() {
+			var t = 10;
 			this.drawerOpened = !this.drawerOpened;
 		},
 
