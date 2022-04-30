@@ -15,10 +15,14 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from api.views import cat_view
+from api.views import CommunicationViewSet
+from rest_framework.routers import DefaultRouter
+
+router = DefaultRouter()
+router.register('communications', CommunicationViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api-auth/', include('rest_framework.urls')),
-    path('cat/', cat_view, name="cat-view")
+    path('api/', include(router.urls))
 ]
