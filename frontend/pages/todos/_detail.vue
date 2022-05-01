@@ -204,9 +204,9 @@ export default Vue.extend({
 
 	data() {
 		return {
-			cardsDone: [{ id: 1, done: true }, { id: 2, done: false }, { id: 3, done: false }, { id: 4, done: true }, { id: 5, done: false }],
+			cardsDone: [{ id: 1, done: true }, { id: 2, done: true }, { id: 3, done: true }, { id: 4, done: true }, { id: 5, done: true }],
 			groupedTodos: [],
-			cardsNotDone: [{ id: 6, done: true }, { id: 7, done: false }, { id: 8, done: false }, { id: 9, done: true }, { id: 10, done: false }],
+			cardsNotDone: [{ id: 6, done: false }, { id: 7, done: false }, { id: 8, done: false }, { id: 9, done: false }, { id: 10, done: false }],
 
 		}
 	},
