@@ -1,5 +1,8 @@
 <template>
-	<v-container class=" mb-6">
+	<v-container
+		v-if="rows"
+		class=" mb-6"
+	>
 		<!-- section header-->
 		<v-row :align="'start'">
 			<v-col cols="6">
@@ -28,8 +31,8 @@
 		>
 			<v-col
 				cols="4"
-				v-for="n in cards"
-				:key="n"
+				v-for="row in rows"
+				:key="row.id"
 			>
 				<v-card
 					class="mx-auto"
@@ -47,14 +50,19 @@
 							>
 								mdi-twitter
 							</v-icon>
-							<span class="text-h6 font-weight-light">User128492</span>
+							<span class="text-h6 font-weight-light">{{row.author.username}}</span>
 						</v-row>
 
 					</v-card-title>
 					<hr>
 					<br>
 					<v-card-text class="text-h5 font-weight-bold">
-						"This is a very cool project, i like cats btw.. However i don't regret having sex with unicorns"
+						{{row.title}}
+
+					</v-card-text>
+					<v-card-text class="text-h5 font-weight-bold">
+						{{row.content}}
+
 					</v-card-text>
 
 					<v-card-actions>
@@ -69,7 +77,7 @@
 									256
 								</span>
 
-								<span class="subheading"> Published 22/04/2022
+								<span class="subheading"> Published {{row.date_published}}
 								</span>
 							</v-row>
 						</v-list-item>
@@ -84,17 +92,17 @@
 import Vue from 'vue'
 import axios from 'axios'
 import { getList } from '../helpers/axios-magic'
+import { Communications } from '../models/communications'
 
 export default Vue.extend({
 	layout: "default",
 	data() {
 		return {
-			cards: [1, 2, 3, 4, 5, 6]
-
+			rows: [] as Communications[],
 		}
 	},
 	async asyncData() {
-		const rows = await getList('communications')
+		const rows: Communications[] = await getList('communications') as unknown as Communications[];
 		console.log('%c rows', 'color:#FFB86C', rows);
 		return { rows }
 	},
