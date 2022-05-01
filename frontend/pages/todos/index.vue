@@ -212,6 +212,14 @@ export default Vue.extend({
 
 	methods: {
 		initialize() {
+			async function fetchMovies() {
+				const response = await fetch('http://localhost:8000/cat/');
+				// waits until the request completes...
+				console.log(response);
+			};
+
+			fetchMovies()
+
 			this.desserts = [
 				{
 					id: 1,
@@ -275,10 +283,10 @@ export default Vue.extend({
 					ncons: 4,
 					npros: 999
 				},
-			] as unknown
+			] as any
 		},
 
-		editItem(item) {
+		editItem(item: any) {
 			this.editedIndex = this.desserts.indexOf(item)
 			this.editedItem = Object.assign({}, item)
 			this.dialog = true
