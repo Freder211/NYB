@@ -1,8 +1,12 @@
 from django.shortcuts import render
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
+from rest_framework.viewsets import ModelViewSet
+from api.models import Communication
+from api.serializers import CommunicationSerializer
 
-@api_view()
-def cat_view(request):
-    return Response({"GATOO": "MAIO MAIO MIAO"})
-# Create your views here.
+
+class CommunicationViewSet(ModelViewSet):
+    queryset = Communication.objects.all()
+    serializer_class = CommunicationSerializer
+
