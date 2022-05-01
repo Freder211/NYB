@@ -9,7 +9,7 @@ class UserSerializer(ModelSerializer):
         fields = ('username',)
 
 class CommunicationSerializer(ModelSerializer):
-    author = UserSerializer()
+    author = UserSerializer(read_only=True)
 
     class Meta:
         model = Communication
