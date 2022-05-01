@@ -2,6 +2,7 @@ export default {
 	buildModules: ['@nuxt/typescript-build'],
 	modules: [
 		'@nuxtjs/vuetify',
+		'@nuxtjs/axios',
 	],
 
 	vuetify: {
@@ -9,5 +10,9 @@ export default {
 			dark: true,
 		}
 	},
+
+	axios: {
+		baseURL: 'http://localohost:8000'
+	}
 
 }

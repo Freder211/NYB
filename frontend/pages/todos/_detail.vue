@@ -76,7 +76,8 @@
 											left
 											:color="n.done ? 'green' : 'red'"
 										>
-											mdi-antenna
+											mdi-checkbox-marked-circle
+
 										</v-icon>
 										<span class="text-h6 font-weight-light">User128492</span>
 									</v-col>
@@ -155,7 +156,8 @@
 											left
 											:color="n.done ? 'green' : 'red'"
 										>
-											mdi-antenna
+
+											mdi-checkbox-blank-circle-outline
 										</v-icon>
 										<span class="text-h6 font-weight-light">User128492</span>
 									</v-col>
