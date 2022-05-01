@@ -1,5 +1,6 @@
 export default {
 	buildModules: ['@nuxt/typescript-build'],
+	ssr: false,
 	modules: [
 		'@nuxtjs/vuetify',
 		'@nuxtjs/axios',
@@ -12,7 +13,11 @@ export default {
 	},
 
 	axios: {
-		baseURL: 'http://localohost:8000'
-	}
+		baseURL: 'http://localhost:8000'
+	},
+
+
+
+
 
 }

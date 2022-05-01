@@ -88,6 +88,7 @@
 							<hr>
 							<br>
 							<v-card-text class="text-h5 font-weight-bold">
+
 								"Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quasi et modi dolorem quibusdam ex consequuntur doloremque sed repellendus natus necessitatibus?"
 							</v-card-text>
 

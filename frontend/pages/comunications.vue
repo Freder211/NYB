@@ -1,5 +1,27 @@
 <template>
 	<v-container class=" mb-6">
+		<!-- section header-->
+		<v-row :align="'start'">
+			<v-col cols="6">
+			</v-col>
+
+			<v-col
+				class="text-right"
+				cols="6"
+			>
+				<v-btn
+					class="ma-2"
+					dark
+				>
+					<v-icon>
+						mdi-plus
+					</v-icon>
+				</v-btn>
+
+			</v-col>
+
+		</v-row>
+
 		<v-row
 			:align="'start'"
 			style="height: 150px;"
@@ -57,9 +79,12 @@
 		</v-row>
 	</v-container>
 </template>
-
+ 
 <script lang="ts">
 import Vue from 'vue'
+import axios from 'axios'
+import { getList } from '../helpers/axios-magic'
+
 export default Vue.extend({
 	layout: "default",
 	data() {
@@ -67,6 +92,15 @@ export default Vue.extend({
 			cards: [1, 2, 3, 4, 5, 6]
 
 		}
-	}
+	},
+	async asyncData() {
+		const rows = await getList('communications')
+		console.log('%c rows', 'color:#FFB86C', rows);
+		return { rows }
+	},
+
+
+
+
 })
 </script>
