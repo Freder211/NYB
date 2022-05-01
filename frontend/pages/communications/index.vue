@@ -12,6 +12,7 @@
 				class="text-right"
 				cols="6"
 			>
+
 				<v-btn
 					class="ma-2"
 					dark
@@ -90,15 +91,15 @@
  
 <script lang="ts">
 import Vue from 'vue'
-import axios from 'axios'
-import { getList } from '../helpers/axios-magic'
-import { Communications } from '../models/communications'
+import { getList } from '../../helpers/axios-magic'
+import { Communications } from '../../models/communications'
 
 export default Vue.extend({
 	layout: "default",
 	data() {
 		return {
 			rows: [] as Communications[],
+			modal: false,
 		}
 	},
 	async asyncData() {
