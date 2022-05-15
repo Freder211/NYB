@@ -46,7 +46,7 @@ export default Vue.extend({
 		return {
 			sections: {
 				'/dashboard': 'Dashboard',
-				'/comunications': "Comunications",
+				'/communications': "Communications",
 				'/schemes': "Schemes",
 				'/todos': "TODO's",
 				'pro-cons': "Pro & Cons"

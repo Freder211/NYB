@@ -76,7 +76,8 @@
 											left
 											:color="n.done ? 'green' : 'red'"
 										>
-											mdi-antenna
+											mdi-checkbox-marked-circle
+
 										</v-icon>
 										<span class="text-h6 font-weight-light">User128492</span>
 									</v-col>
@@ -87,6 +88,7 @@
 							<hr>
 							<br>
 							<v-card-text class="text-h5 font-weight-bold">
+
 								"Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quasi et modi dolorem quibusdam ex consequuntur doloremque sed repellendus natus necessitatibus?"
 							</v-card-text>
 
@@ -155,7 +157,8 @@
 											left
 											:color="n.done ? 'green' : 'red'"
 										>
-											mdi-antenna
+
+											mdi-checkbox-blank-circle-outline
 										</v-icon>
 										<span class="text-h6 font-weight-light">User128492</span>
 									</v-col>
@@ -204,9 +207,9 @@ export default Vue.extend({
 
 	data() {
 		return {
-			cardsDone: [{ id: 1, done: true }, { id: 2, done: false }, { id: 3, done: false }, { id: 4, done: true }, { id: 5, done: false }],
+			cardsDone: [{ id: 1, done: true }, { id: 2, done: true }, { id: 3, done: true }, { id: 4, done: true }, { id: 5, done: true }],
 			groupedTodos: [],
-			cardsNotDone: [{ id: 6, done: true }, { id: 7, done: false }, { id: 8, done: false }, { id: 9, done: true }, { id: 10, done: false }],
+			cardsNotDone: [{ id: 6, done: false }, { id: 7, done: false }, { id: 8, done: false }, { id: 9, done: false }, { id: 10, done: false }],
 
 		}
 	},
