@@ -11,6 +11,7 @@ from rest_framework.decorators import api_view, authentication_classes, permissi
 from django.contrib.auth import login, logout
 from rest_framework import status
 
+
 class OwnershipViewSet(ModelViewSet):
 
     def get_queryset(self):
@@ -47,5 +48,5 @@ def login_view(request):
 
 @api_view(["DELETE"])
 def logout_view(request):
-    logout(response)
+    logout(request)
     return Response(status=status.HTTP_204_NO_CONTENT)
