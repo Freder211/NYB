@@ -21,3 +21,6 @@ __py_cache__
 
 #*#
 .#*#
+
+static/
+.python-version
