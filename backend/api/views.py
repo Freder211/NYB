@@ -1,37 +1,40 @@
 from django.contrib.auth.models import User
-from django.shortcuts import render
-from rest_framework import response
-from rest_framework.authentication import BasicAuthentication, SessionAuthentication
-from rest_framework.permissions import SAFE_METHODS, IsAuthenticated
+from rest_framework.authentication import BasicAuthentication
+from rest_framework.permissions import SAFE_METHODS, IsAuthenticated, AllowAny
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 from api.models import Communication, Schema
 from api.serializers import CommunicationSerializer, SchemaSerializer, UserSerializer
-from rest_framework.decorators import api_view, authentication_classes, permission_classes
+from rest_framework.decorators import (
+    api_view,
+    authentication_classes,
+    permission_classes,
+)
 from django.contrib.auth import login, logout
 from rest_framework import status
 
+from logging import getLogger
 
-class OwnershipViewSet(ModelViewSet):
+logger = getLogger("api")
 
+
+class CrewContentViewSet(ModelViewSet):
     def get_queryset(self):
         user = self.request.user
 
         if not isinstance(user, User):
             raise RuntimeError("A user must be provided to use this view")
 
-        if self.request.method in SAFE_METHODS:
-            return super().get_queryset()
-
-        return super().get_queryset().filter(author=user)
+        user_crews = user.crews.all()
+        return super().get_queryset().filter(crew__in=user_crews)
 
 
-class CommunicationViewSet(OwnershipViewSet):
+class CommunicationViewSet(CrewContentViewSet):
     queryset = Communication.objects.all()
     serializer_class = CommunicationSerializer
 
 
-class SchemaViewSet(OwnershipViewSet):
+class SchemaViewSet(CrewContentViewSet):
     queryset = Schema.objects.all()
     serializer_class = SchemaSerializer
 
@@ -47,6 +50,7 @@ def login_view(request):
 
 
 @api_view(["DELETE"])
+@permission_classes([AllowAny])
 def logout_view(request):
     logout(request)
     return Response(status=status.HTTP_204_NO_CONTENT)
