@@ -19,6 +19,8 @@ logger = getLogger("api")
 
 
 class CrewContentViewSet(ModelViewSet):
+    filter_fields = ["crew"]
+
     def get_queryset(self):
         user = self.request.user
 
