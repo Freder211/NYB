@@ -15,14 +15,23 @@ from rest_framework import status
 
 from logging import getLogger
 
+from api.permissions import CrewPermission
+
 logger = getLogger("api")
 
 
 class CrewContentViewSet(ModelViewSet):
     filter_fields = ["crew"]
+    permission_classes = [CrewPermission]
+
+    def current_action(self):
+        method = self.request.method.lower()
+        return self.action_map[method]
 
     def get_queryset(self):
         user = self.request.user
+        if self.current_action() != "list":
+            return super().get_queryset()
 
         if not isinstance(user, User):
             raise RuntimeError("A user must be provided to use this view")
