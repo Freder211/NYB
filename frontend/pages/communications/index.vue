@@ -83,7 +83,7 @@
  
 <script lang="ts">
 import Vue from 'vue'
-import { getList } from '../../helpers/axios-magic'
+import { getList, postItem } from '../../helpers/axios-magic'
 import { apiBaseResponse, Communications } from '../../models/communications'
 
 export default Vue.extend({
@@ -105,7 +105,11 @@ export default Vue.extend({
 
 
 	methods: {
-		handleEdit() {
+		async handleEdit() {
+			console.log('%c entrato ', 'color:#FFB86C', this.$refs.modal.item.author);
+			const obj = this.$refs.modal.item;
+			const apiResponse = await postItem('communications', obj);
+			console.log('%c rows', 'color:#FFB86C', apiResponse);
 
 		},
 

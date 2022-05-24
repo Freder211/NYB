@@ -118,10 +118,13 @@ export default Vue.extend({
 			showModal: false,
 		}
 	},
+
 	methods: {
 
 		emitItem() {
 			this.showModal = false;
+			console.log('%c this.item', 'color:#FFB86C', this.item);
+			this.item.title = 'paxxerello'
 			this.$emit('emitItem', this.item)
 		},
 
