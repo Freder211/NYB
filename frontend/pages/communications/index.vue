@@ -4,30 +4,24 @@
 		class=" mb-6"
 	>
 		<!-- section header-->
-		<v-row :align="'start'">
-			<v-col cols="6">
-			</v-col>
 
-			<v-col
-				class="text-right"
-				cols="6"
+		<communications-modal
+			ref="modal"
+			:item="selectedItem"
+			@emitItem="handleEdit()"
+		></communications-modal>
+
+		<v-row class="mt-2 float-right">
+			<v-icon
+				large
+				dark
+				@click="handleOpen()"
 			>
-
-				<v-btn
-					class="ma-2"
-					dark
-				>
-					<v-icon>
-						mdi-plus
-					</v-icon>
-				</v-btn>
-
-			</v-col>
-
+				mdi-plus
+			</v-icon>
 		</v-row>
-
 		<v-row
-			:align="'start'"
+			align="start"
 			style="height: 150px;"
 		>
 			<v-col
@@ -41,13 +35,11 @@
 					max-width="400"
 				>
 					<v-card-title>
-						<v-row
-							align="right"
-							justify="end"
-						>
+						<v-row justify="end">
 							<v-icon
 								large
 								left
+								@click="selectedItem=row"
 							>
 								mdi-twitter
 							</v-icon>
@@ -99,14 +91,27 @@ export default Vue.extend({
 	data() {
 		return {
 			rows: [] as Communications[],
-			modal: false,
+			openModal: false,
+			selectedItem: new Communications(),
 		}
 	},
+
 	async asyncData() {
 		const rows: Communications[] = await getList('communications') as unknown as Communications[];
 		console.log('%c rows', 'color:#FFB86C', rows);
 		return { rows }
 	},
+
+
+	methods: {
+		handleEdit() {
+
+		},
+
+		handleOpen() {
+			this.$refs.modal.openModal();
+		}
+	}
 
 
 
