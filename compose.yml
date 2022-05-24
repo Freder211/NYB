@@ -1,4 +1,15 @@
 services:
+  web:
+    image: nginx
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - ./web/develop/conf.d:/etc/nginx/conf.d
+    depends_on:
+      - frontend
+      - backend
+
   frontend:
     build: ./frontend/
     volumes:
