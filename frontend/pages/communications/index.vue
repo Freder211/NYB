@@ -83,7 +83,7 @@
  
 <script lang="ts">
 import Vue from 'vue'
-import { getList, postItem } from '../../helpers/axios-magic'
+import { getList, create } from '~/helpers/axios-magic'
 import { apiBaseResponse, Communications } from '../../models/communications'
 
 export default Vue.extend({
