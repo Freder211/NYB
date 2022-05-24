@@ -6,4 +6,6 @@ EXPOSE 3000
 
 WORKDIR /app/
 
-CMD ["sh", "run_dev.sh"]
+ENTRYPOINT ["yarn"]
+
+CMD ["dev"]
