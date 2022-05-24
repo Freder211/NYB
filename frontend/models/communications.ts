@@ -16,3 +16,11 @@ export class Author {
 
 	}
 }
+
+
+export class apiBaseResponse {
+	count?: number;
+	next?: string;
+	previous?: string;
+	results?: [] = [];
+}

@@ -84,7 +84,7 @@
 <script lang="ts">
 import Vue from 'vue'
 import { getList } from '../../helpers/axios-magic'
-import { Communications } from '../../models/communications'
+import { apiBaseResponse, Communications } from '../../models/communications'
 
 export default Vue.extend({
 	layout: "default",
@@ -97,8 +97,9 @@ export default Vue.extend({
 	},
 
 	async asyncData() {
-		const rows: Communications[] = await getList('communications') as unknown as Communications[];
-		console.log('%c rows', 'color:#FFB86C', rows);
+		const apiResponse: apiBaseResponse = await getList('communications');
+		console.log('%c rows', 'color:#FFB86C', apiResponse.results);
+		const rows = apiResponse.results;
 		return { rows }
 	},
 
