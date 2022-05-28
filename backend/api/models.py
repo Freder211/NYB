@@ -18,6 +18,7 @@ class Membership(models.Model):
 
 
 class CrewContentModel(models.Model):
+    title = fields.CharField(max_length=50, blank=True)
     author = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     crew = models.ForeignKey(Crew, on_delete=models.CASCADE, null=True)
     datetime_created = fields.DateTimeField(auto_now_add=True)
@@ -28,7 +29,6 @@ class CrewContentModel(models.Model):
 
 
 class Communication(CrewContentModel):
-    title = fields.CharField(max_length=50, blank=True)
     content = fields.TextField(blank=True)
     date_published = fields.DateField(auto_now_add=True)
 
@@ -37,10 +37,18 @@ class Communication(CrewContentModel):
 
 
 class Schema(CrewContentModel):
-    title = fields.CharField(max_length=50, blank=True)
     description = fields.TextField(blank=True)
     image = models.FileField(blank=True, upload_to="schemas/")
     date_published = fields.DateField(auto_now_add=True)
 
     def __str__(self):
         return self.title
+
+
+class TodoList(CrewContentModel):
+    pass
+
+
+class TodoItem(models.Model):
+    tdlist = models.ForeignKey(TodoList, on_delete=models.CASCADE, related_name="items")
+    state = fields.BooleanField(default=False)
