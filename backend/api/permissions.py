@@ -34,3 +34,8 @@ class CrewPermission(BasePermission):
             return False
 
         return user.crews.filter(pk=crew_pk).exists()
+
+
+class CrewChildPermission(BaseException):
+    # TODO: implemente permission
+    pass

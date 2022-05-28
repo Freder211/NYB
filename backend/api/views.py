@@ -48,6 +48,11 @@ class CrewContentViewSet(ModelViewSet):
         return super().get_queryset().filter(crew__in=user_crews)
 
 
+class CrewChildContentViewSet(ModelViewSet):
+    # TODO: implement viewset
+    pass
+
+
 class CommunicationViewSet(CrewContentViewSet):
     queryset = Communication.objects.all()
     serializer_class = CommunicationSerializer
