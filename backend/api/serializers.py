@@ -65,26 +65,22 @@ class CrewContentSerializer(ModelSerializer, CrewHelperMixin):
 class CrewChildContentSerializer(ModelSerializer, CrewHelperMixin):
     @property
     def parent_field(self):
-        p_field = self.Meta.parent_field
-        if not isinstance(p_field, str):
-            raise ValueError(
-                "You must provide parent_field attribute in Meta class and it must be a string."
-            )
-        return p_field
+        return self.Meta.model.get_parent_field()
 
     def get_parent(self, validated_data):
+        logger.debug(self.parent_field)
         return validated_data.get(self.parent_field)
 
     def validate(self, validated_data):
         parent = self.get_parent(validated_data)
+        if not hasattr(parent, "crew"):
+            raise ValueError("parent does not contain 'crew' field.")
+
         if not self.is_user_member(parent.crew):
             raise ValidationError(
                 {self.parent_field: "You do not belong to this item's crew."}
             )
         return validated_data
-
-    class Meta:
-        parent_field = None
 
 
 class CommunicationSerializer(CrewContentSerializer):

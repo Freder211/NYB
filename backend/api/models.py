@@ -49,6 +49,30 @@ class TodoList(CrewContentModel):
     pass
 
 
-class TodoItem(models.Model):
+class CrewChildContent(models.Model):
+    @classmethod
+    def get_parent_field(cls):
+        p_field = cls.CrewMeta.parent_field
+        if not isinstance(p_field, str):
+            raise ValueError(
+                "You must provide parent_field attribute in CrewMeta class and it must be a string."
+            )
+        return p_field
+
+    @property
+    def parent(self):
+        return getattr(self, self.get_parent_field())
+
+    class Meta:
+        abstract = True
+
+    class CrewMeta:
+        parent_field = None
+
+
+class TodoItem(CrewChildContent):
     tdlist = models.ForeignKey(TodoList, on_delete=models.CASCADE, related_name="items")
     state = fields.BooleanField(default=False)
+
+    class CrewMeta:
+        parent_field = "tdlist"
