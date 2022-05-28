@@ -1,10 +1,16 @@
 from django.contrib.auth.models import User
+from rest_framework.exceptions import ValidationError
 from rest_framework.authentication import BasicAuthentication
 from rest_framework.permissions import SAFE_METHODS, IsAuthenticated, AllowAny
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
-from api.models import Communication, Schema
-from api.serializers import CommunicationSerializer, SchemaSerializer, UserSerializer
+from api.models import Communication, Schema, TodoList
+from api.serializers import (
+    CommunicationSerializer,
+    SchemaSerializer,
+    TodoListSerializer,
+    UserSerializer,
+)
 from rest_framework.decorators import (
     api_view,
     authentication_classes,
@@ -49,6 +55,11 @@ class CommunicationViewSet(CrewContentViewSet):
 class SchemaViewSet(CrewContentViewSet):
     queryset = Schema.objects.all()
     serializer_class = SchemaSerializer
+
+
+class TodoListViewSet(CrewContentViewSet):
+    queryset = TodoList.objects.all()
+    serializer_class = TodoListSerializer
 
 
 @api_view(["POST"])
