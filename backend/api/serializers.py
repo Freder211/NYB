@@ -31,7 +31,7 @@ class RequestHelperMixin:
         if user.is_anonymous:
             raise RuntimeError("user must be authenticated.")
 
-        return user.crews
+        return user.crews.all()
 
     @property
     def user_crews(self):
@@ -41,13 +41,18 @@ class RequestHelperMixin:
         return self._crews
 
 
-class CrewContentSerializer(ModelSerializer, RequestHelperMixin):
+class CrewHelperMixin(RequestHelperMixin):
+    def is_user_member(self, crew):
+        return self.user_crews.filter(pk=crew.pk).exists()
+
+
+class CrewContentSerializer(ModelSerializer, CrewHelperMixin):
     author = UserSerializer(read_only=True)
     crew = serializers.PrimaryKeyRelatedField(queryset=Crew.objects.all())
 
     def validate(self, data):
         crew = data.get("crew")
-        if not self.user_crews.filter(pk=crew.pk).exists():
+        if not self.is_user_member(crew):
             raise ValidationError({"crew": "You do not belong to this crew."})
 
         return data
@@ -55,6 +60,31 @@ class CrewContentSerializer(ModelSerializer, RequestHelperMixin):
     def create(self, validated_data):
         validated_data["author"] = self.request.user
         return super().create(validated_data)
+
+
+class CrewChildContentSerializer(ModelSerializer, CrewHelperMixin):
+    @property
+    def parent_field(self):
+        p_field = self.Meta.parent_field
+        if not isinstance(p_field, str):
+            raise ValueError(
+                "You must provide parent_field attribute in Meta class and it must be a string."
+            )
+        return p_field
+
+    def get_parent(self, validated_data):
+        return validated_data.get(self.parent_field)
+
+    def validate(self, validated_data):
+        parent = self.get_parent(validated_data)
+        if not self.is_user_member(parent.crew):
+            raise ValidationError(
+                {self.parent_field: "You do not belong to this item's crew."}
+            )
+        return validated_data
+
+    class Meta:
+        parent_field = None
 
 
 class CommunicationSerializer(CrewContentSerializer):
