@@ -18,7 +18,7 @@ class UserSerializer(ModelSerializer):
         )
 
 
-class OwnershipSerializer(ModelSerializer):
+class CrewContentSerializer(ModelSerializer):
     author = UserSerializer(read_only=True)
     crew = serializers.PrimaryKeyRelatedField(queryset=Crew.objects.all())
 
@@ -58,19 +58,19 @@ class OwnershipSerializer(ModelSerializer):
         return super().update(instance, validated_data)
 
 
-class CommunicationSerializer(OwnershipSerializer):
+class CommunicationSerializer(CrewContentSerializer):
     class Meta:
         model = Communication
         fields = "__all__"
 
 
-class SchemaSerializer(OwnershipSerializer):
+class SchemaSerializer(CrewContentSerializer):
     class Meta:
         model = Schema
         fields = "__all__"
 
 
-class TodoListSerializer(OwnershipSerializer):
+class TodoListSerializer(CrewContentSerializer):
     class Meta:
         model = TodoList
         fields = "__all__"
