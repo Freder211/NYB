@@ -30,11 +30,12 @@ class CrewContentViewSet(ModelViewSet):
 
     def get_queryset(self):
         user = self.request.user
-        if self.current_action() != "list":
-            return super().get_queryset()
 
         if not isinstance(user, User):
-            raise RuntimeError("A user must be provided to use this view")
+            raise TypeError("A user must be provided to use this view")
+
+        if self.current_action() != "list":
+            return super().get_queryset()
 
         user_crews = user.crews.all()
         return super().get_queryset().filter(crew__in=user_crews)
