@@ -22,21 +22,15 @@ class OwnershipSerializer(ModelSerializer):
     author = UserSerializer(read_only=True)
     crew = serializers.PrimaryKeyRelatedField(queryset=Crew.objects.all())
 
-    def get_user(self):
+    @property
+    def request(self):
         request = self.context.get("request")
         if not request:
             raise RuntimeError("request must be provided in the serializer context.")
-        return request.user
-
-    @property
-    def user(self):
-        if not hasattr(self, "_user"):
-            self._user = self.get_user()
-
-        return self._user
+        return request
 
     def get_user_crews(self):
-        user = self.user
+        user = self.request.user
         if user.is_anonymous:
             raise RuntimeError("user must be authenticated.")
 
@@ -57,8 +51,11 @@ class OwnershipSerializer(ModelSerializer):
         return data
 
     def create(self, validated_data):
-        validated_data["author"] = self.user
+        validated_data["author"] = self.request.user
         return super().create(validated_data)
+
+    def update(self, instance, validated_data):
+        return super().update(instance, validated_data)
 
 
 class CommunicationSerializer(OwnershipSerializer):
