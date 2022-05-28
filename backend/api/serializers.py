@@ -57,6 +57,7 @@ class OwnershipSerializer(ModelSerializer):
         return data
 
     def create(self, validated_data):
+        validated_data["author"] = self.user
         return super().create(validated_data)
 
 
