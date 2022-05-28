@@ -18,10 +18,7 @@ class UserSerializer(ModelSerializer):
         )
 
 
-class CrewContentSerializer(ModelSerializer):
-    author = UserSerializer(read_only=True)
-    crew = serializers.PrimaryKeyRelatedField(queryset=Crew.objects.all())
-
+class RequestHelperMixin:
     @property
     def request(self):
         request = self.context.get("request")
@@ -43,6 +40,11 @@ class CrewContentSerializer(ModelSerializer):
 
         return self._crews
 
+
+class CrewContentSerializer(ModelSerializer, RequestHelperMixin):
+    author = UserSerializer(read_only=True)
+    crew = serializers.PrimaryKeyRelatedField(queryset=Crew.objects.all())
+
     def validate(self, data):
         crew = data.get("crew")
         if not self.user_crews.filter(pk=crew.pk).exists():
@@ -53,9 +55,6 @@ class CrewContentSerializer(ModelSerializer):
     def create(self, validated_data):
         validated_data["author"] = self.request.user
         return super().create(validated_data)
-
-    def update(self, instance, validated_data):
-        return super().update(instance, validated_data)
 
 
 class CommunicationSerializer(CrewContentSerializer):
