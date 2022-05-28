@@ -12,7 +12,7 @@ logger = getLogger("api")
 
 class CrewPermission(BasePermission):
     def has_permission(self, request: Request, view: View):
-        user: User = request.user
+        user = request.user
         crew_pk = request.query_params.get("crew")
         if crew_pk:
             return user.crews.filter(pk=crew_pk).exists()
