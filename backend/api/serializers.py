@@ -1,7 +1,7 @@
 from django.core.exceptions import ValidationError
 from rest_framework.serializers import ModelSerializer, Serializer
 from rest_framework import serializers
-from api.models import Communication, Crew, Schema, TodoList
+from api.models import Communication, Crew, Schema, TodoItem, TodoList
 from django.contrib.auth.models import User
 
 import logging
@@ -103,3 +103,10 @@ class TodoListSerializer(CrewContentSerializer):
     class Meta:
         model = TodoList
         fields = "__all__"
+
+
+class TodoItemSerializer(CrewChildContentSerializer):
+    class Meta:
+        model = TodoItem
+        fields = "__all__"
+        parent_field = "tdlist"

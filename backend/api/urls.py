@@ -2,6 +2,7 @@ from django.urls import path, include
 from api.views import (
     CommunicationViewSet,
     SchemaViewSet,
+    TodoItemViewSet,
     TodoListViewSet,
     login_view,
     logout_view,
@@ -12,6 +13,7 @@ router = DefaultRouter()
 router.register("communications", CommunicationViewSet)
 router.register("schemas", SchemaViewSet)
 router.register("todolists", TodoListViewSet)
+router.register("todoitems", TodoItemViewSet)
 
 
 urlpatterns = [

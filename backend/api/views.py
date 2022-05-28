@@ -4,10 +4,11 @@ from rest_framework.authentication import BasicAuthentication
 from rest_framework.permissions import SAFE_METHODS, IsAuthenticated, AllowAny
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
-from api.models import Communication, Schema, TodoList
+from api.models import Communication, Schema, TodoItem, TodoList
 from api.serializers import (
     CommunicationSerializer,
     SchemaSerializer,
+    TodoItemSerializer,
     TodoListSerializer,
     UserSerializer,
 )
@@ -60,6 +61,11 @@ class SchemaViewSet(CrewContentViewSet):
 class TodoListViewSet(CrewContentViewSet):
     queryset = TodoList.objects.all()
     serializer_class = TodoListSerializer
+
+
+class TodoItemViewSet(ModelViewSet):
+    queryset = TodoItem.objects.all()
+    serializer_class = TodoItemSerializer
 
 
 @api_view(["POST"])
