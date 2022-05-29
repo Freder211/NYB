@@ -18,16 +18,16 @@ class CrewPermission(IsAuthenticated):
             return False
 
         user = request.user
+
         crew_pk = request.query_params.get("crew")
-
-        if not Crew.objects.filter(pk=crew_pk).exists():
-            raise ValidationError(
-                {"detail": "The crew you requested does not exist."},
-                code=status.HTTP_404_NOT_FOUND,
-            )
-
         if crew_pk:
-            return user.crews.filter(pk=crew_pk).exists()
+            if not Crew.objects.filter(pk=crew_pk).exists():
+                raise ValidationError(
+                    {"detail": "The crew you requested does not exist."},
+                    code=status.HTTP_404_NOT_FOUND,
+                )
+
+                return user.crews.filter(pk=crew_pk).exists()
 
         return True
 
