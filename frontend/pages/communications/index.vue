@@ -1,24 +1,28 @@
 <template>
+
 	<v-container
 		v-if="rows"
 		class=" mb-6"
 	>
 		<!-- section header-->
-
 		<communications-modal
 			ref="modal"
 			:item="selectedItem"
-			@emitItem="handleEdit()"
+			@emitItem="handleEdit($event)"
 		></communications-modal>
 
 		<v-row class="mt-2 float-right">
-			<v-icon
-				large
-				dark
-				@click="handleOpen()"
-			>
-				mdi-plus
-			</v-icon>
+
+			<v-col cols="6">
+				<v-icon
+					large
+					dark
+					@click="handleOpen()"
+				>
+					mdi-plus
+				</v-icon>
+			</v-col>
+
 		</v-row>
 		<v-row
 			align="start"
@@ -35,15 +39,41 @@
 					max-width="400"
 				>
 					<v-card-title>
-						<v-row justify="end">
-							<v-icon
-								large
-								left
-								@click="selectedItem=row"
-							>
-								mdi-twitter
-							</v-icon>
-							<span class="text-h6 font-weight-light">{{row.author.username}}</span>
+						<v-row>
+							<v-col cols="6">
+								<v-btn
+									class="ma-2"
+									color="orange"
+									@click="handleOpen(row)"
+									dark
+									small
+								>
+									<v-icon dark>
+										mdi-wrench
+									</v-icon>
+								</v-btn>
+
+								<v-btn
+									class="ma-2"
+									color="red"
+									dark
+									small
+								>
+									<v-icon dark>
+										mdi-minus
+									</v-icon>
+								</v-btn>
+
+							</v-col>
+							<v-col cols="6">
+								<v-icon
+									large
+									left
+								>
+									mdi-twitter
+								</v-icon>
+								<span class="text-h6 font-weight-light">{{row.author.username}}</span>
+							</v-col>
 						</v-row>
 
 					</v-card-title>
@@ -91,30 +121,25 @@ export default Vue.extend({
 	data() {
 		return {
 			rows: [] as Communications[],
-			openModal: false,
 			selectedItem: new Communications(),
 		}
 	},
 
 	async asyncData() {
-		const apiResponse: ApiBaseResponse = await getList('communications');
-		console.log('%c rows', 'color:#FFB86C', apiResponse.results);
+		const apiResponse: ApiBaseResponse = await getList('communications', { crew: 1 });
 		const rows = apiResponse.results;
 		return { rows }
 	},
 
-
 	methods: {
-		async handleEdit() {
-			console.log('%c entrato ', 'color:#FFB86C', this.$refs.modal.item.author);
-			const obj = this.$refs.modal.item;
-			const apiResponse = await create('communications', obj);
-			console.log('%c rows', 'color:#FFB86C', apiResponse);
+		async handleEdit(item: Communications) {
+			const apiResponse = await create('communications', item);
 
 		},
 
-		handleOpen() {
-			this.$refs.modal.openModal();
+		handleOpen(row?: Communications) {
+			row ? this.selectedItem = row : '';
+			(this.$refs.modal as any)?.openModal();
 		}
 	}
 
