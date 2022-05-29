@@ -56,8 +56,9 @@
 
 
 <script lang="ts">
-import { Communications } from '~/models/communications'
 import Vue from 'vue'
+import { Communications } from '~/models/communications'
+import cloneDeep from 'lodash'
 export default Vue.extend({
 	layout: "default",
 	data() {
@@ -67,8 +68,15 @@ export default Vue.extend({
 		}
 	},
 	props: {
-		item: { type: Communications, default: () => { new Communications() } },
+		item: { type: Object, default: () => { new Communications() } },
 	},
+
+
+	mounted() {
+
+		console.log('%c ', 'color:#FFB86C', this.item);
+	},
+
 
 	methods: {
 

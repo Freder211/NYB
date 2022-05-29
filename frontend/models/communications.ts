@@ -4,6 +4,7 @@ export class Communications {
 	content?: string;
 	date_published?: string;
 	author!: Author;
+	crew?: number;
 	constructor() {
 		this.author = new Author();
 	}

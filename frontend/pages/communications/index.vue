@@ -8,7 +8,7 @@
 		<communications-modal
 			ref="modal"
 			:item="selectedItem"
-			@emitItem="handleEdit($event)"
+			@emitItem="editItem($event)"
 		></communications-modal>
 
 		<v-row class="mt-2 float-right">
@@ -40,9 +40,9 @@
 				>
 					<v-card-title>
 						<v-row>
-							<v-col cols="6">
+							<v-col cols="8">
+
 								<v-btn
-									class="ma-2"
 									color="orange"
 									@click="handleOpen(row)"
 									dark
@@ -54,8 +54,8 @@
 								</v-btn>
 
 								<v-btn
-									class="ma-2"
 									color="red"
+									@click="deleteItem(row)"
 									dark
 									small
 								>
@@ -63,17 +63,15 @@
 										mdi-minus
 									</v-icon>
 								</v-btn>
-
 							</v-col>
-							<v-col cols="6">
-								<v-icon
-									large
-									left
-								>
-									mdi-twitter
-								</v-icon>
+
+							<v-col
+								cols="4"
+								class="text-right"
+							>
 								<span class="text-h6 font-weight-light">{{row.author.username}}</span>
 							</v-col>
+
 						</v-row>
 
 					</v-card-title>
@@ -87,7 +85,6 @@
 						{{row.content}}
 
 					</v-card-text>
-
 					<v-card-actions>
 						<v-list-item class="grow">
 
@@ -113,7 +110,7 @@
  
 <script lang="ts">
 import Vue from 'vue'
-import { getList, create } from '~/helpers/axios-magic'
+import { apiCreate, apiDelete, apiEdit, getItems } from '~/helpers/axios-magic'
 import { ApiBaseResponse, Communications } from '../../models/communications'
 
 export default Vue.extend({
@@ -126,21 +123,35 @@ export default Vue.extend({
 	},
 
 	async asyncData() {
-		const apiResponse: ApiBaseResponse = await getList('communications', { crew: 1 });
+		const apiResponse: ApiBaseResponse = await getItems('communications', undefined, { crew: 1 });
 		const rows = apiResponse.results;
 		return { rows }
 	},
 
 	methods: {
-		async handleEdit(item: Communications) {
-			const apiResponse = await create('communications', item);
 
+		async loadList() {
+			const apiResponse: ApiBaseResponse = await getItems('communications', undefined, { crew: 1 });
+			this.rows = apiResponse.results!;
 		},
 
 		handleOpen(row?: Communications) {
-			row ? this.selectedItem = row : '';
+			row ? this.selectedItem = row : this.selectedItem.crew = 1;
 			(this.$refs.modal as any)?.openModal();
-		}
+		},
+
+		async editItem(item: Communications) {
+			item.id ? await apiEdit('communications', item) : await apiCreate('communications', item)
+			this.loadList();
+
+		},
+
+		async deleteItem(item: Communications) {
+			await apiDelete('communications', item.id!);
+			this.loadList();
+		},
+
+
 	}
 
 
