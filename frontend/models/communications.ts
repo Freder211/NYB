@@ -18,7 +18,7 @@ export class Author {
 }
 
 
-export class apiBaseResponse {
+export class ApiBaseResponse {
 	count?: number;
 	next?: string;
 	previous?: string;
