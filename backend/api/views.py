@@ -22,7 +22,7 @@ from rest_framework import status
 
 from logging import getLogger
 
-from api.permissions import CrewPermission
+from api.permissions import CrewChildPermission, CrewPermission
 
 logger = getLogger("api")
 
@@ -41,16 +41,25 @@ class CrewContentViewSet(ModelViewSet):
         if not isinstance(user, User):
             raise TypeError("A user must be provided to use this view")
 
-        if self.current_action() != "list":
-            return super().get_queryset()
+        if self.current_action() == "list":
+            return self.get_crew_fitlered_qs(user)
 
+        return super().get_queryset()
+
+    def get_crew_fitlered_qs(self, user):
         user_crews = user.crews.all()
-        return super().get_queryset().filter(crew__in=user_crews)
+        return (
+            super(CrewContentViewSet, self).get_queryset().filter(crew__in=user_crews)
+        )
 
 
-class CrewChildContentViewSet(ModelViewSet):
-    # TODO: implement viewset
-    pass
+class CrewChildContentViewSet(CrewContentViewSet):
+    permission_classes = [CrewChildPermission]
+    filter_fields = ["tdlist"]
+
+    def get_crew_fitlered_qs(self, user):
+        user_crews = user.crews.all()
+        return self.queryset.filter(tdlist__crew__in=user_crews)
 
 
 class CommunicationViewSet(CrewContentViewSet):
@@ -68,7 +77,7 @@ class TodoListViewSet(CrewContentViewSet):
     serializer_class = TodoListSerializer
 
 
-class TodoItemViewSet(ModelViewSet):
+class TodoItemViewSet(CrewChildContentViewSet):
     queryset = TodoItem.objects.all()
     serializer_class = TodoItemSerializer
 

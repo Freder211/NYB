@@ -105,4 +105,3 @@ class TodoItemSerializer(CrewChildContentSerializer):
     class Meta:
         model = TodoItem
         fields = "__all__"
-        parent_field = "tdlist"
