@@ -61,10 +61,7 @@ export default Vue.extend({
 		item: { type: Object, default: () => { new Todolists() } },
 	},
 
-	mounted() {
 
-		console.log('%c ', 'color:#FFB86C', 'ciao');
-	},
 	methods: {
 
 		emitItem() {
