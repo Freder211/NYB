@@ -12,7 +12,6 @@
 				<v-card-text>
 					<v-container>
 						<v-row>
-
 							<v-col cols="12">
 								<v-text-field
 									label="Title*"
@@ -23,6 +22,7 @@
 							<v-col cols="12">
 								<v-textarea
 									label="Description*"
+									rows="10"
 									v-model="item.content"
 									required
 								></v-textarea>

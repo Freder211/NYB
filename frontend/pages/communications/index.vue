@@ -81,11 +81,11 @@
 						{{row.title}}
 
 					</v-card-text>
-					<v-card-text class="text-h5 font-weight-bold">
-						{{row.content}}
+					<v-card-text class="text-h6 font-weight-bold">
+						{{row.content | truncate(100)}}
 
 					</v-card-text>
-					<v-card-actions>
+					<v-footer class="footer-bottom">
 						<v-list-item class="grow">
 
 							<v-row justify="space-between">
@@ -101,7 +101,7 @@
 								</span>
 							</v-row>
 						</v-list-item>
-					</v-card-actions>
+					</v-footer>
 				</v-card>
 			</v-col>
 		</v-row>
@@ -165,3 +165,4 @@ export default Vue.extend({
 
 })
 </script>
+

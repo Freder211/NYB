@@ -5,8 +5,8 @@
 export default {
 	middleware({ $auth, redirect }) {
 		redirect("/dashboard")
-
 	}
+
 }
 
 </script>
