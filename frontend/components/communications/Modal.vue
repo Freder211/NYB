@@ -7,7 +7,7 @@
 		>
 			<v-card>
 				<v-card-title>
-					<span class="text-h5"></span>
+					<span class="text-h5">{{item.id ? "Edit item" : "New item" }}</span>
 				</v-card-title>
 				<v-card-text>
 					<v-container>
@@ -58,25 +58,16 @@
 <script lang="ts">
 import Vue from 'vue'
 import { Communications } from '~/models/communications'
-import cloneDeep from 'lodash'
 export default Vue.extend({
 	layout: "default",
 	data() {
 		return {
 			showModal: false,
-			modalItem: Communications,
 		}
 	},
 	props: {
 		item: { type: Object, default: () => { new Communications() } },
 	},
-
-
-	mounted() {
-
-		console.log('%c ', 'color:#FFB86C', this.item);
-	},
-
 
 	methods: {
 
