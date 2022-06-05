@@ -11,3 +11,8 @@ export class Todolists {
 		this.author = new Author();
 	}
 }
+
+
+export class TodoItems {
+	id?: number;
+}
