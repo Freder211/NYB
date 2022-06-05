@@ -136,7 +136,13 @@ export default Vue.extend({
 		},
 
 		handleOpen(row?: Communications) {
-			row ? this.selectedItem = row : this.selectedItem.crew = 1;
+			if (row) {
+				this.selectedItem = { ...row }
+			}
+			else {
+				this.selectedItem = new Communications();
+				this.selectedItem.crew = 1;
+			}
 			(this.$refs.modal as any)?.openModal();
 		},
 
