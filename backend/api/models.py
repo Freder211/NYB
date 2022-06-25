@@ -71,8 +71,11 @@ class CrewChildContent(models.Model):
 
 
 class TodoItem(CrewChildContent):
-    tdlist = models.ForeignKey(TodoList, on_delete=models.CASCADE, related_name="items")
+    tdlist_id = models.ForeignKey(
+        TodoList, on_delete=models.CASCADE, related_name="items"
+    )
     state = fields.BooleanField(default=False)
+    content = fields.TextField(blank=True)
 
     class CrewMeta:
         parent_field = "tdlist"

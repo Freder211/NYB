@@ -1,7 +1,6 @@
 from django.contrib.auth.models import User
-from rest_framework.exceptions import ValidationError
 from rest_framework.authentication import BasicAuthentication
-from rest_framework.permissions import SAFE_METHODS, IsAuthenticated, AllowAny
+from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 from api.models import Communication, Schema, TodoItem, TodoList
