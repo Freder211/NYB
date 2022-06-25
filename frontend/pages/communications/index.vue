@@ -81,7 +81,10 @@
 						{{row.title}}
 
 					</v-card-text>
-					<v-card-text class="text-h6 font-weight-bold">
+					<v-card-text
+						style="height:13vh;"
+						class="text-h6 font-weight-bold"
+					>
 						{{row.content | truncate(100)}}
 
 					</v-card-text>

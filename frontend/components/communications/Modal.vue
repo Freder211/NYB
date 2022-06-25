@@ -11,24 +11,33 @@
 				</v-card-title>
 				<v-card-text>
 					<v-container>
-						<v-row>
-							<v-col cols="12">
-								<v-text-field
-									label="Title*"
-									v-model="item.title"
-									required
-								></v-text-field>
-							</v-col>
-							<v-col cols="12">
-								<v-textarea
-									label="Description*"
-									rows="10"
-									v-model="item.content"
-									required
-								></v-textarea>
-							</v-col>
+						<v-form
+							ref="form"
+							v-model="valid"
+							lazy-validation
+						>
+							<v-row>
+								<v-col cols="12">
+									<v-text-field
+										label="Title*"
+										v-model="item.title"
+										:rules="nameRules"
+										required
+									></v-text-field>
+								</v-col>
+								<v-col cols="12">
+									<v-textarea
+										label="Description*"
+										rows="10"
+										v-model="item.content"
+										:rules="descrRules"
+										required
+									></v-textarea>
+								</v-col>
 
-						</v-row>
+							</v-row>
+
+						</v-form>
 					</v-container>
 					<small>*Indicates required field</small>
 				</v-card-text>
@@ -63,6 +72,15 @@ export default Vue.extend({
 	data() {
 		return {
 			showModal: false,
+			valid: false,
+			nameRules: [
+				v => !!v || 'Name is required',
+				v => (v && v.length <= 20) || 'Name must be less than 20 characters',
+			],
+			descrRules: [
+				v => !!v || 'Description is required',
+				v => (v && v.length >= 30) || 'Description must be more than 30 characters',
+			]
 		}
 	},
 	props: {
@@ -72,8 +90,10 @@ export default Vue.extend({
 	methods: {
 
 		emitItem() {
-			this.showModal = false;
-			this.$emit('emitItem', this.item)
+			if (this.valid && this.$refs.form!.validate()) {
+				this.showModal = false;
+				this.$emit('emitItem', this.item)
+			}
 		},
 
 		close() {
