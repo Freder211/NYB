@@ -16,6 +16,11 @@
 			class="elevation-1 mx-4 mt-4"
 		>
 
+			<template v-slot:item.title="{ item }">
+				<nuxt-link :to="'/todos/' + item.id">{{ item.title }}</nuxt-link>
+
+			</template>
+
 			<template v-slot:item.ncons="{ item }">
 				<v-chip
 					v-if="item.ncons"
@@ -104,13 +109,13 @@ export default Vue.extend({
 				value: 'title',
 			},
 			{
-				text: 'N° of Pros',
+				text: 'Done',
 				sortable: true,
 				value: 'npros',
 				align: 'start',
 			},
 			{
-				text: 'N° of Cons',
+				text: 'Not done',
 				sortable: true,
 				value: 'ncons',
 				align: 'start',
