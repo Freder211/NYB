@@ -1,6 +1,7 @@
 from django.db import models
 from django.db.models import fields
 from django.contrib.auth.models import User
+from django.db.models import Count
 
 # Create your models here.
 
@@ -46,7 +47,13 @@ class Schema(CrewContentModel):
 
 
 class TodoList(CrewContentModel):
-    pass
+    def done_count(self):
+        aggreagtion = self.items.filter(state=True).aggregate(items=Count("id"))
+        return aggreagtion["items"]
+
+    def undone_count(self):
+        aggreagtion = self.items.filter(state=False).aggregate(items=Count("id"))
+        return aggreagtion["items"]
 
 
 class CrewChildContent(models.Model):

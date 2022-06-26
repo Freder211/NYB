@@ -96,9 +96,19 @@ class SchemaSerializer(CrewContentSerializer):
 
 
 class TodoListSerializer(CrewContentSerializer):
+
+    done_count = serializers.SerializerMethodField()
+    undone_count = serializers.SerializerMethodField()
+
     class Meta:
         model = TodoList
         fields = "__all__"
+
+    def get_done_count(self, instance):
+        return instance.done_count()
+
+    def get_undone_count(self, instance):
+        return instance.undone_count()
 
 
 class TodoItemSerializer(CrewChildContentSerializer):
