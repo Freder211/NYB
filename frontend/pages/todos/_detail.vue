@@ -52,7 +52,7 @@
 					</v-col>
 				</v-row>
 			</v-col>
-
+			<v-divider vertical></v-divider>
 			<v-col cols="6">
 				<v-row>
 					<v-col cols="12">
