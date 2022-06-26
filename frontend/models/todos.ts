@@ -16,8 +16,9 @@ export class Todolists {
 export class TodoItems {
 	id?: number;
 	crew?: number;
-	tdlist?: number;
+	tdlist_id?: number;
 	content?: string;
+	state?: boolean;
 	date_published?: string;
 	author!: Author;
 }

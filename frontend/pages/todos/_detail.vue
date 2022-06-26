@@ -37,15 +37,40 @@
 
 		<v-row :align="'start'">
 			<v-col cols="6">
-				<div v-for="item in rows.filter(r=>r.state==true)">
-					{{item.state}}
-				</div>
+				<v-row>
+					<v-col cols="12">
+						<div v-for="item in rows.filter(r=>r.state==true)">
+							<v-chip
+								color="green"
+								class="mb-1"
+								@click="invertState(item)"
+								@click:close="deleteItem(item)"
+								close
+								close-icon="mdi-delete"
+							>{{item.content}}</v-chip>
+						</div>
+					</v-col>
+				</v-row>
 			</v-col>
 
 			<v-col cols="6">
-				<div v-for="item in rows.filter(r=>r.state==false)">
-					{{item.state}}
-				</div>
+				<v-row>
+					<v-col cols="12">
+						<div v-for="item in rows.filter(r=>r.state==false)">
+							<v-chip
+								color="red"
+								class="mb-1"
+								@click="invertState(item)"
+								@click:close="deleteItem(item)"
+								close
+								close-icon="mdi-delete"
+							>{{item.content}}</v-chip>
+							<br>
+
+						</div>
+					</v-col>
+
+				</v-row>
 			</v-col>
 
 		</v-row>
@@ -83,7 +108,7 @@ export default Vue.extend({
 	methods: {
 
 		async loadList() {
-			const apiResponse: ApiBaseResponse = await getItems('todoitems', undefined, { tdlist: this.todo.id, crew: 1 });
+			const apiResponse: ApiBaseResponse = await getItems('todoitems', undefined, { tdlist_id: this.todo.id, crew: 1 });
 			this.rows = apiResponse.results!;
 		},
 
@@ -101,9 +126,20 @@ export default Vue.extend({
 			else {
 				this.selectedItem = new Todolists();
 				this.selectedItem.crew = 1;
-				this.selectedItem.tdlist = this.todo.id;
+				this.selectedItem.tdlist_id = this.todo.id;
 			}
 			(this.$refs.modal as any)?.openModal();
+		},
+
+
+		invertState(item: TodoItems) {
+			item.state = !item.state;
+			this.editItem(item);
+		},
+
+		async deleteItem(item: TodoItems) {
+			await apiDelete('todoitems', item.id!);
+			this.loadList();
 		},
 
 
