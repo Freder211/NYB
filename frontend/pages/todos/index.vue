@@ -24,7 +24,7 @@
 			<template v-slot:item.done_count="{ item }">
 				<v-chip
 					v-if="item.done_count"
-					:color="'red'"
+					:color="'green'"
 					dark
 				>
 					{{ item.done_count }}
@@ -34,7 +34,7 @@
 			<template v-slot:item.undone_count="{ item }">
 				<v-chip
 					v-if="item.undone_count"
-					:color="'green'"
+					:color="'red'"
 					dark
 				>
 					{{ item.undone_count }}
