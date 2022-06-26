@@ -78,4 +78,4 @@ class TodoItem(CrewChildContent):
     content = fields.TextField(blank=True)
 
     class CrewMeta:
-        parent_field = "tdlist"
+        parent_field = "tdlist_id"

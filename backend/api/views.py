@@ -54,11 +54,11 @@ class CrewContentViewSet(ModelViewSet):
 
 class CrewChildContentViewSet(CrewContentViewSet):
     permission_classes = [CrewChildPermission]
-    filter_fields = ["tdlist"]
+    filter_fields = ["tdlist_id"]
 
     def get_crew_fitlered_qs(self, user):
         user_crews = user.crews.all()
-        return self.queryset.filter(tdlist__crew__in=user_crews)
+        return self.queryset.filter(tdlist_id__crew__in=user_crews)
 
 
 class CommunicationViewSet(CrewContentViewSet):
