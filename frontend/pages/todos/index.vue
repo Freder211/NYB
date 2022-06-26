@@ -21,23 +21,23 @@
 
 			</template>
 
-			<template v-slot:item.ncons="{ item }">
+			<template v-slot:item.done_count="{ item }">
 				<v-chip
-					v-if="item.ncons"
+					v-if="item.done_count"
 					:color="'red'"
 					dark
 				>
-					{{ item.ncons }}
+					{{ item.done_count }}
 				</v-chip>
 			</template>
 
-			<template v-slot:item.npros="{ item }">
+			<template v-slot:item.undone_count="{ item }">
 				<v-chip
-					v-if="item.npros"
+					v-if="item.undone_count"
 					:color="'green'"
 					dark
 				>
-					{{ item.npros }}
+					{{ item.undone_count }}
 				</v-chip>
 			</template>
 
@@ -111,13 +111,13 @@ export default Vue.extend({
 			{
 				text: 'Done',
 				sortable: true,
-				value: 'npros',
+				value: 'done_count',
 				align: 'start',
 			},
 			{
 				text: 'Not done',
 				sortable: true,
-				value: 'ncons',
+				value: 'undone_count',
 				align: 'start',
 			},
 			{

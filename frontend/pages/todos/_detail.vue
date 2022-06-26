@@ -10,7 +10,7 @@
 
 		<v-row :align="'start'">
 			<v-col cols="6">
-				<h1>Current todo list: {{todo.title}}
+				<h1>Current todo list:
 				</h1>
 			</v-col>
 
@@ -88,27 +88,23 @@ export default Vue.extend({
 
 	async asyncData({ params }) {
 		const id = params.detail //param
-		const apiResponse: ApiBaseResponse = await getItems('todolists', undefined, { id: id, crew: 1 });
-		const todo = apiResponse!.results![0];
-		return { todo }
+		const apiResponse: ApiBaseResponse = await getItems('todoitems', undefined, { tdlist_id: id });
+		const rows = apiResponse.results!;
+		return { rows }
 	},
 
 	data: () => ({
-		todo: new Todolists(),
+		todoid: 0,
 		rows: [] as TodoItems[],
 		selectedItem: new TodoItems(),
 	}),
 
 
-	mounted() {
-		this.loadList();
-
-	},
 
 	methods: {
 
 		async loadList() {
-			const apiResponse: ApiBaseResponse = await getItems('todoitems', undefined, { tdlist_id: this.todo.id, crew: 1 });
+			const apiResponse: ApiBaseResponse = await getItems('todoitems', undefined, { tdlist_id: +this.$route.params.detail });
 			this.rows = apiResponse.results!;
 		},
 
@@ -126,7 +122,7 @@ export default Vue.extend({
 			else {
 				this.selectedItem = new Todolists();
 				this.selectedItem.crew = 1;
-				this.selectedItem.tdlist_id = this.todo.id;
+				this.selectedItem.tdlist_id = +this.$route.params.detail;
 			}
 			(this.$refs.modal as any)?.openModal();
 		},
