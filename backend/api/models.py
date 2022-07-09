@@ -2,6 +2,7 @@ from django.db import models
 from django.db.models import fields
 from django.contrib.auth.models import User
 from django.db.models import Count
+from django.db.models.base import Model
 
 # Create your models here.
 
@@ -46,14 +47,37 @@ class Schema(CrewContentModel):
         return self.title
 
 
-class TodoList(CrewContentModel):
-    def done_count(self):
-        aggreagtion = self.items.filter(state=True).aggregate(items=Count("id"))
-        return aggreagtion["items"]
+def generate_list_model(
+    name: str, state_field_name: str, positive_count_name: str, negative_count_name: str
+):
+    def items_count(self, filter_data):
+        aggreagtion = self.items.filter(**filter_data).aggregate(items=Count("id"))
+        return aggreagtion["item"]
 
-    def undone_count(self):
-        aggreagtion = self.items.filter(state=False).aggregate(items=Count("id"))
-        return aggreagtion["items"]
+    def positive_count(self):
+        filter_data = {state_field_name: True}
+        return self.items_count(filter_data)
+
+    def negative_count(self):
+        filter_data = {state_field_name: False}
+        return self.items_count(filter_data)
+
+    CrewMeta = type("CrewMeta", (object,), {"state_field_name": state_field_name})
+
+    return type(
+        name,
+        (CrewContentModel,),
+        {
+            "items_count": items_count,
+            positive_count_name: positive_count,
+            negative_count_name: negative_count,
+            "CrewMeta": CrewMeta,
+            "__module__": __name__,
+        },
+    )
+
+
+TodoList = generate_list_model("TodoList", "state", "done_count", "undone_count")
 
 
 class CrewChildContent(models.Model):
@@ -75,6 +99,10 @@ class CrewChildContent(models.Model):
 
     class CrewMeta:
         parent_field = None
+
+
+def generate_item_model(name: str, list_model: CrewContentModel, fk_field: str):
+    pass
 
 
 class TodoItem(CrewChildContent):
