@@ -1,7 +1,15 @@
 from django.core.exceptions import ValidationError
 from rest_framework.serializers import ModelSerializer, Serializer
 from rest_framework import serializers
-from api.models import Communication, Crew, Schema, TodoItem, TodoList
+from api.models import (
+    Communication,
+    Crew,
+    ProConItem,
+    ProConList,
+    Schema,
+    TodoItem,
+    TodoList,
+)
 from django.contrib.auth.models import User
 
 import logging
@@ -97,21 +105,31 @@ class SchemaSerializer(CrewContentSerializer):
 
 class TodoListSerializer(CrewContentSerializer):
 
-    done_count = serializers.SerializerMethodField()
-    undone_count = serializers.SerializerMethodField()
+    done_count = serializers.BooleanField(read_only=True)
+    undone_count = serializers.BooleanField(read_only=True)
 
     class Meta:
         model = TodoList
         fields = "__all__"
 
-    def get_done_count(self, instance):
-        return instance.done_count()
-
-    def get_undone_count(self, instance):
-        return instance.undone_count()
-
 
 class TodoItemSerializer(CrewChildContentSerializer):
     class Meta:
         model = TodoItem
+        fields = "__all__"
+
+
+class ProConSerializer(CrewContentSerializer):
+
+    pros_count = serializers.BooleanField(read_only=True)
+    cons_count = serializers.BooleanField(read_only=True)
+
+    class Meta:
+        model = ProConList
+        fields = "__all__"
+
+
+class ProConItemSerializer(CrewChildContentSerializer):
+    class Meta:
+        model = ProConItem
         fields = "__all__"

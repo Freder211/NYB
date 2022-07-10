@@ -76,7 +76,7 @@ class ProConList(GenericList):
         return self.count_items(state=True)
 
     @property
-    def undone_count(self):
+    def cons_count(self):
         return self.count_items(state=False)
 
 
