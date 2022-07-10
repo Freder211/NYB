@@ -3,9 +3,11 @@ from rest_framework.authentication import BasicAuthentication
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
-from api.models import Communication, Schema, TodoItem, TodoList
+from api.models import Communication, ProConItem, ProConList, Schema, TodoItem, TodoList
 from api.serializers import (
     CommunicationSerializer,
+    ProConItemSerializer,
+    ProConSerializer,
     SchemaSerializer,
     TodoItemSerializer,
     TodoListSerializer,
@@ -54,11 +56,21 @@ class CrewContentViewSet(ModelViewSet):
 
 class CrewChildContentViewSet(CrewContentViewSet):
     permission_classes = [CrewChildPermission]
-    filter_fields = ["tdlist_id"]
 
     def get_crew_fitlered_qs(self, user):
         user_crews = user.crews.all()
-        return self.queryset.filter(tdlist_id__crew__in=user_crews)
+        filter_data = {f"{self.get_parent_field_name()}__crew__in": user_crews}
+        return self.queryset.filter(**filter_data)
+
+    def get_parent_field_name(self):
+        parent_field_name = self.CrewMeta.parent_field_name
+        if not parent_field_name:
+            raise RuntimeError("parent_field_name must be defined")
+
+        return parent_field_name
+
+    class CrewMeta:
+        parent_field_name = ""
 
 
 class CommunicationViewSet(CrewContentViewSet):
@@ -77,8 +89,26 @@ class TodoListViewSet(CrewContentViewSet):
 
 
 class TodoItemViewSet(CrewChildContentViewSet):
+    filter_fields = ["tdlist_id"]
     queryset = TodoItem.objects.all()
     serializer_class = TodoItemSerializer
+
+    class CrewMeta:
+        parent_field_name = "tdlist_id"
+
+
+class ProConListViewSet(CrewContentViewSet):
+    queryset = ProConList.objects.all()
+    serializer_class = ProConSerializer
+
+
+class ProConItemViewSet(CrewChildContentViewSet):
+    filter_fields = ["pclist_id"]
+    queryset = ProConItem.objects.all()
+    serializer_class = ProConItemSerializer
+
+    class CrewMeta:
+        parent_field_name = "pclist_id"
 
 
 @api_view(["POST"])
