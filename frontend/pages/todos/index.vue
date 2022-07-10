@@ -109,15 +109,15 @@ export default Vue.extend({
 				value: 'title',
 			},
 			{
-				text: 'Pros',
+				text: 'Done',
 				sortable: true,
-				value: 'pros_count',
+				value: 'done_count',
 				align: 'start',
 			},
 			{
-				text: 'Cons',
+				text: 'Not done',
 				sortable: true,
-				value: 'cons_count',
+				value: 'undone_count',
 				align: 'start',
 			},
 			{

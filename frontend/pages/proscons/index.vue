@@ -21,23 +21,23 @@
 
 			</template>
 
-			<template v-slot:item.done_count="{ item }">
+			<template v-slot:item.pros_count="{ item }">
 				<v-chip
-					v-if="item.done_count"
+					v-if="item.pros_count"
 					:color="'green'"
 					dark
 				>
-					{{ item.done_count }}
+					{{ item.pros_count }}
 				</v-chip>
 			</template>
 
-			<template v-slot:item.undone_count="{ item }">
+			<template v-slot:item.cons_count="{ item }">
 				<v-chip
-					v-if="item.undone_count"
+					v-if="item.cons_count"
 					:color="'red'"
 					dark
 				>
-					{{ item.undone_count }}
+					{{ item.cons_count }}
 				</v-chip>
 			</template>
 
@@ -109,15 +109,15 @@ export default Vue.extend({
 				value: 'title',
 			},
 			{
-				text: 'Done',
+				text: 'Pros',
 				sortable: true,
-				value: 'done_count',
+				value: 'pros_count',
 				align: 'start',
 			},
 			{
-				text: 'Not done',
+				text: 'Cons',
 				sortable: true,
-				value: 'undone_count',
+				value: 'cons_count',
 				align: 'start',
 			},
 			{
