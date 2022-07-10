@@ -16,7 +16,7 @@ export class ProConList {
 export class ProConItem {
 	id?: number;
 	crew?: number;
-	tdlist_id?: number;
+	pclist_id?: number;
 	content?: string;
 	state?: boolean;
 	date_published?: string;

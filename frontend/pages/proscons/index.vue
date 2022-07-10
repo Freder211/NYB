@@ -17,7 +17,7 @@
 		>
 
 			<template v-slot:item.title="{ item }">
-				<nuxt-link :to="'/procons/' + item.id">{{ item.title }}</nuxt-link>
+				<nuxt-link :to="'/proscons/' + item.id">{{ item.title }}</nuxt-link>
 
 			</template>
 
@@ -176,7 +176,7 @@ export default Vue.extend({
 		},
 
 		goToDetails(event: any, itemevent: any) {
-			this.$nuxt.$router.push('/procons/' + itemevent.item!.id)
+			this.$nuxt.$router.push('/proscons/' + itemevent.item!.id)
 
 		}
 

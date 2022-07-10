@@ -88,7 +88,7 @@ export default Vue.extend({
 
 	async asyncData({ params }) {
 		const id = params.detail //param
-		const apiResponse: ApiBaseResponse = await getItems('proconsitems', undefined, { tdlist_id: id });
+		const apiResponse: ApiBaseResponse = await getItems('proconitems', undefined, { pclist_id: id });
 		const rows = apiResponse.results!;
 		return { rows }
 	},
@@ -104,13 +104,13 @@ export default Vue.extend({
 	methods: {
 
 		async loadList() {
-			const apiResponse: ApiBaseResponse = await getItems('proconsitems', undefined, { tdlist_id: +this.$route.params.detail });
+			const apiResponse: ApiBaseResponse = await getItems('proconitems', undefined, { pclist_id: +this.$route.params.detail });
 			this.rows = apiResponse.results!;
 		},
 
 
 		async editItem(item: ProConItem) {
-			item.id ? await apiEdit('proconsitems', item) : await apiCreate('proconsitems', item)
+			item.id ? await apiEdit('proconitems', item) : await apiCreate('proconitems', item)
 			this.loadList();
 
 		},
@@ -122,7 +122,7 @@ export default Vue.extend({
 			else {
 				this.selectedItem = new ProConList();
 				this.selectedItem.crew = 1;
-				this.selectedItem.tdlist_id = +this.$route.params.detail;
+				this.selectedItem.pclist_id = +this.$route.params.detail;
 			}
 			(this.$refs.modal as any)?.openModal();
 		},
@@ -134,7 +134,7 @@ export default Vue.extend({
 		},
 
 		async deleteItem(item: ProConItem) {
-			await apiDelete('ProConItem', item.id!);
+			await apiDelete('proconitems', item.id!);
 			this.loadList();
 		},
 
