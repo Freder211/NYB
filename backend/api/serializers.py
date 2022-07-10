@@ -105,8 +105,8 @@ class SchemaSerializer(CrewContentSerializer):
 
 class TodoListSerializer(CrewContentSerializer):
 
-    done_count = serializers.BooleanField(read_only=True)
-    undone_count = serializers.BooleanField(read_only=True)
+    done_count = serializers.IntegerField(read_only=True)
+    undone_count = serializers.IntegerField(read_only=True)
 
     class Meta:
         model = TodoList
@@ -121,8 +121,8 @@ class TodoItemSerializer(CrewChildContentSerializer):
 
 class ProConSerializer(CrewContentSerializer):
 
-    pros_count = serializers.BooleanField(read_only=True)
-    cons_count = serializers.BooleanField(read_only=True)
+    pros_count = serializers.IntegerField(read_only=True)
+    cons_count = serializers.IntegerField(read_only=True)
 
     class Meta:
         model = ProConList
