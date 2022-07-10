@@ -35,6 +35,22 @@
 		<v-main>
 			<Nuxt />
 		</v-main>
+		<v-footer padless>
+			<v-col
+				class="text-center"
+				cols="12"
+			>
+				{{ new Date().getFullYear() }} • <strong>© NYB Corporate</strong>
+				•
+				<i>Privacy &</i> <i>Cookie policy </i>
+				•
+				<a
+					class="link-decoration"
+					href="https://github.com/Freder211/NYB"
+					target="_blank"
+				>Report a bug</a>
+			</v-col>
+		</v-footer>
 	</v-app>
 </template>
 
@@ -77,3 +93,8 @@ export default Vue.extend({
 	}
 })
 </script>
+<style>
+a {
+	text-decoration: none;
+}
+</style>
