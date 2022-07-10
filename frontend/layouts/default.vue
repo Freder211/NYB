@@ -78,7 +78,14 @@ export default Vue.extend({
 			const path: string = this.$route.path
 			if (!path)
 				return ''
-			return this.sections[path]
+			for (let [key, value] of Object.entries(this.sections)) {
+				if (path.includes(key)) {
+					return this.sections[key]
+
+				}
+
+			}
+
 		}
 
 	},
