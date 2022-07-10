@@ -22,7 +22,6 @@ function getNonSafeMethodAxiosConfig() {
 
 export async function getItems(endpoint: string, itemid?: number, queryparams?: object) {
 	const list = await axios.get(buildFullEndpoint(endpoint, itemid), { params: queryparams })
-	console.log('%c list', 'color:#FFB86C', list);
 	return list.data;
 }
 
