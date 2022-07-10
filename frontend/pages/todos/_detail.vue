@@ -82,21 +82,21 @@
 import Vue from 'vue'
 import { apiCreate, apiDelete, apiEdit, getItems } from '~/helpers/axios-magic'
 import { ApiBaseResponse } from '~/models/communications';
-import { Todolists, TodoItems } from '~/models/todos';
+import { Todolist, TodoItem } from '~/models/todos';
 export default Vue.extend({
 	layout: "default",
 
 	async asyncData({ params }) {
 		const id = params.detail //param
-		const apiResponse: ApiBaseResponse = await getItems('todoitems', undefined, { tdlist_id: id });
+		const apiResponse: ApiBaseResponse = await getItems('TodoItem', undefined, { tdlist_id: id });
 		const rows = apiResponse.results!;
 		return { rows }
 	},
 
 	data: () => ({
 		todoid: 0,
-		rows: [] as TodoItems[],
-		selectedItem: new TodoItems(),
+		rows: [] as TodoItem[],
+		selectedItem: new TodoItem(),
 	}),
 
 
@@ -104,23 +104,23 @@ export default Vue.extend({
 	methods: {
 
 		async loadList() {
-			const apiResponse: ApiBaseResponse = await getItems('todoitems', undefined, { tdlist_id: +this.$route.params.detail });
+			const apiResponse: ApiBaseResponse = await getItems('TodoItem', undefined, { tdlist_id: +this.$route.params.detail });
 			this.rows = apiResponse.results!;
 		},
 
 
-		async editItem(item: TodoItems) {
-			item.id ? await apiEdit('todoitems', item) : await apiCreate('todoitems', item)
+		async editItem(item: TodoItem) {
+			item.id ? await apiEdit('TodoItem', item) : await apiCreate('TodoItem', item)
 			this.loadList();
 
 		},
 
-		handleOpen(row?: Todolists) {
+		handleOpen(row?: Todolist) {
 			if (row) {
 				this.selectedItem = { ...row }
 			}
 			else {
-				this.selectedItem = new Todolists();
+				this.selectedItem = new Todolist();
 				this.selectedItem.crew = 1;
 				this.selectedItem.tdlist_id = +this.$route.params.detail;
 			}
@@ -128,13 +128,13 @@ export default Vue.extend({
 		},
 
 
-		invertState(item: TodoItems) {
+		invertState(item: TodoItem) {
 			item.state = !item.state;
 			this.editItem(item);
 		},
 
-		async deleteItem(item: TodoItems) {
-			await apiDelete('todoitems', item.id!);
+		async deleteItem(item: TodoItem) {
+			await apiDelete('TodoItem', item.id!);
 			this.loadList();
 		},
 

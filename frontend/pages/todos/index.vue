@@ -89,12 +89,12 @@
 import Vue from 'vue'
 import { apiCreate, apiDelete, apiEdit, getItems } from '~/helpers/axios-magic';
 import { ApiBaseResponse } from '~/models/communications';
-import { Todolists } from '../../models/todos'
+import { Todolist } from '../../models/todos'
 export default Vue.extend({
 	layout: "default",
 	data: () => ({
-		rows: [] as Todolists[],
-		selectedItem: new Todolists(),
+		rows: [] as Todolist[],
+		selectedItem: new Todolist(),
 		headers: [
 			{
 				text: 'Author',
@@ -133,7 +133,7 @@ export default Vue.extend({
 	}),
 
 	async asyncData() {
-		const apiResponse: ApiBaseResponse = await getItems('todolists', undefined, { crew: 1 });
+		const apiResponse: ApiBaseResponse = await getItems('Todolist', undefined, { crew: 1 });
 		const rows = apiResponse.results;
 		return { rows }
 	},
@@ -142,23 +142,23 @@ export default Vue.extend({
 
 	methods: {
 		async loadList() {
-			const apiResponse: ApiBaseResponse = await getItems('todolists', undefined, { crew: 1 });
+			const apiResponse: ApiBaseResponse = await getItems('Todolist', undefined, { crew: 1 });
 			this.rows = apiResponse.results!;
 		},
 
 
-		async editItem(item: Todolists) {
-			item.id ? await apiEdit('todolists', item) : await apiCreate('todolists', item)
+		async editItem(item: Todolist) {
+			item.id ? await apiEdit('Todolist', item) : await apiCreate('Todolist', item)
 			this.loadList();
 
 		},
 
-		handleOpen(row?: Todolists) {
+		handleOpen(row?: Todolist) {
 			if (row) {
 				this.selectedItem = { ...row }
 			}
 			else {
-				this.selectedItem = new Todolists();
+				this.selectedItem = new Todolist();
 				this.selectedItem.crew = 1;
 			}
 
@@ -166,12 +166,12 @@ export default Vue.extend({
 		},
 
 		async deleteItem(item: any) {
-			await apiDelete('todolists', item.id!);
+			await apiDelete('Todolist', item.id!);
 			this.loadList();
 		},
 
 
-		handleDelete(row: Todolists) {
+		handleDelete(row: Todolist) {
 			this.deleteItem(row)
 		},
 

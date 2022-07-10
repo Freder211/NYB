@@ -59,7 +59,7 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import { Todolists } from '~/models/todos'
+import { Todolist } from '~/models/todos'
 export default Vue.extend({
 	layout: "default",
 	data() {
@@ -73,7 +73,7 @@ export default Vue.extend({
 		}
 	},
 	props: {
-		item: { type: Object, default: () => { new Todolists() } },
+		item: { type: Object, default: () => { new Todolist() } },
 	},
 
 

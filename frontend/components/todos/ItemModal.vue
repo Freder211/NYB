@@ -66,7 +66,7 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import { TodoItems } from '~/models/todos'
+import { TodoItem } from '~/models/todos'
 export default Vue.extend({
 	layout: "default",
 	data() {
@@ -80,7 +80,7 @@ export default Vue.extend({
 		}
 	},
 	props: {
-		item: { type: Object, default: () => { new TodoItems() } },
+		item: { type: Object, default: () => { new TodoItem() } },
 	},
 
 
