@@ -7,6 +7,8 @@ export class Todolist {
 	date_published?: string;
 	author!: Author;
 	crew?: number;
+	done_count?: number;
+	undone_count?: number
 	constructor() {
 		this.author = new Author();
 	}

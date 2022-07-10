@@ -7,6 +7,8 @@ export class ProConList {
 	date_published?: string;
 	author!: Author;
 	crew?: number;
+	pros_count?: number;
+	cons_count?: number
 	constructor() {
 		this.author = new Author();
 	}
