@@ -3,6 +3,7 @@ from django.db.models import fields
 from django.contrib.auth.models import User
 from django.db.models import Count
 
+
 # Create your models here.
 
 
@@ -46,14 +47,37 @@ class Schema(CrewContentModel):
         return self.title
 
 
-class TodoList(CrewContentModel):
-    def done_count(self):
-        aggreagtion = self.items.filter(state=True).aggregate(items=Count("id"))
-        return aggreagtion["items"]
+class GenericList(CrewContentModel):
+    def count_items(self, **filter_data):
+        items = getattr(self, self.CrewMeta.items_field_name)
+        aggregation = items.filter(**filter_data).aggregate(items=Count("id"))
+        return aggregation["items"]
 
+    class CrewMeta:
+        items_field_name = "items"
+
+    class Meta:
+        abstract = True
+
+
+class TodoList(GenericList):
+    @property
+    def done_count(self):
+        return self.count_items(state=True)
+
+    @property
     def undone_count(self):
-        aggreagtion = self.items.filter(state=False).aggregate(items=Count("id"))
-        return aggreagtion["items"]
+        return self.count_items(state=False)
+
+
+class ProConList(GenericList):
+    @property
+    def pros_count(self):
+        return self.count_items(state=True)
+
+    @property
+    def undone_count(self):
+        return self.count_items(state=False)
 
 
 class CrewChildContent(models.Model):
@@ -77,12 +101,27 @@ class CrewChildContent(models.Model):
         parent_field = None
 
 
-class TodoItem(CrewChildContent):
-    tdlist_id = models.ForeignKey(
-        TodoList, on_delete=models.CASCADE, related_name="items"
-    )
+class GenericListItem(CrewChildContent):
     state = fields.BooleanField(default=False)
     content = fields.TextField(blank=True)
 
+    class Meta:
+        abstract = True
+
+
+class TodoItem(GenericListItem):
+    tdlist_id = models.ForeignKey(
+        TodoList, on_delete=models.CASCADE, related_name="items"
+    )
+
     class CrewMeta:
         parent_field = "tdlist_id"
+
+
+class ProConItem(GenericListItem):
+    pclist_id = models.ForeignKey(
+        ProConList, on_delete=models.CASCADE, related_name="items"
+    )
+
+    class CrewMeta:
+        parent_field = "pclist_id"
