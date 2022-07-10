@@ -27,7 +27,62 @@
 		>
 			<v-app-bar-nav-icon @click="toggleDrawer" />
 			<v-row class="d-flex justify-center ">
-				<v-toolbar-title>You are currently looking at {{currentSectionName}}</v-toolbar-title>
+				<v-toolbar-title>You are currently looking at {{currentSectionName}}
+
+				</v-toolbar-title>
+				<div class="avatar-icon">
+					<v-menu
+						bottom
+						min-width="200px"
+						rounded
+						offset-y
+					>
+						<template v-slot:activator="{ on }">
+							<v-btn
+								icon
+								x-large
+								v-on="on"
+							>
+								<v-avatar
+									color="red"
+									size="48"
+								>
+									<span class="white--text text-h5">{{ 'xd' }}</span>
+								</v-avatar>
+							</v-btn>
+						</template>
+						<v-card>
+							<v-list-item-content class="justify-center">
+								<div class="mx-auto text-center">
+									<v-avatar color="brown">
+										<span class="white--text text-h5">{{ 'xd' }}</span>
+									</v-avatar>
+									<h3>{{ 'xd' }}</h3>
+									<p class="text-caption mt-1">
+										{{ 'xd' }}
+									</p>
+									<v-divider class="my-3"></v-divider>
+									<v-btn
+										depressed
+										rounded
+										text
+									>
+										Edit Account
+									</v-btn>
+									<v-divider class="my-3"></v-divider>
+									<v-btn
+										depressed
+										rounded
+										text
+									>
+										Disconnect
+									</v-btn>
+								</div>
+							</v-list-item-content>
+						</v-card>
+					</v-menu>
+				</div>
+
 			</v-row>
 
 		</v-app-bar>
@@ -103,5 +158,13 @@ export default Vue.extend({
 <style>
 a {
 	text-decoration: none;
+}
+</style>
+
+<style scoped>
+.avatar-icon {
+	position: absolute;
+	right: 0.3rem;
+	top: 0.3rem;
 }
 </style>
