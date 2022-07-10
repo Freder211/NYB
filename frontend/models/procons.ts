@@ -1,6 +1,6 @@
 import { Author } from './communications';
 
-export class Todolist {
+export class ProConList {
 	id?: number;
 	title?: string;
 	content?: string;
@@ -13,7 +13,7 @@ export class Todolist {
 }
 
 
-export class TodoItem {
+export class ProConItem {
 	id?: number;
 	crew?: number;
 	tdlist_id?: number;

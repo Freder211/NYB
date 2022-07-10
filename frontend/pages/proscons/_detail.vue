@@ -2,15 +2,15 @@
 	<v-container class="mb-6">
 
 		<!-- section header-->
-		<todos-item-modal
+		<proscons-item-modal
 			ref="modal"
 			:item="selectedItem"
 			@emitItem="editItem($event)"
-		></todos-item-modal>
+		></proscons-item-modal>
 
 		<v-row :align="'start'">
 			<v-col cols="6">
-				<h1>Current todo list:
+				<h1>Current Pro/Con list:
 				</h1>
 			</v-col>
 
@@ -82,21 +82,21 @@
 import Vue from 'vue'
 import { apiCreate, apiDelete, apiEdit, getItems } from '~/helpers/axios-magic'
 import { ApiBaseResponse } from '~/models/communications';
-import { Todolist, TodoItem } from '~/models/todos';
+import { ProConItem, ProConList } from '~/models/procons';
 export default Vue.extend({
 	layout: "default",
 
 	async asyncData({ params }) {
 		const id = params.detail //param
-		const apiResponse: ApiBaseResponse = await getItems('todoitems', undefined, { tdlist_id: id });
+		const apiResponse: ApiBaseResponse = await getItems('proconsitems', undefined, { tdlist_id: id });
 		const rows = apiResponse.results!;
 		return { rows }
 	},
 
 	data: () => ({
 		todoid: 0,
-		rows: [] as TodoItem[],
-		selectedItem: new TodoItem(),
+		rows: [] as ProConItem[],
+		selectedItem: new ProConItem(),
 	}),
 
 
@@ -104,23 +104,23 @@ export default Vue.extend({
 	methods: {
 
 		async loadList() {
-			const apiResponse: ApiBaseResponse = await getItems('todoitems', undefined, { tdlist_id: +this.$route.params.detail });
+			const apiResponse: ApiBaseResponse = await getItems('proconsitems', undefined, { tdlist_id: +this.$route.params.detail });
 			this.rows = apiResponse.results!;
 		},
 
 
-		async editItem(item: TodoItem) {
-			item.id ? await apiEdit('todoitems', item) : await apiCreate('todoitems', item)
+		async editItem(item: ProConItem) {
+			item.id ? await apiEdit('proconsitems', item) : await apiCreate('proconsitems', item)
 			this.loadList();
 
 		},
 
-		handleOpen(row?: Todolist) {
+		handleOpen(row?: ProConList) {
 			if (row) {
 				this.selectedItem = { ...row }
 			}
 			else {
-				this.selectedItem = new Todolist();
+				this.selectedItem = new ProConList();
 				this.selectedItem.crew = 1;
 				this.selectedItem.tdlist_id = +this.$route.params.detail;
 			}
@@ -128,13 +128,13 @@ export default Vue.extend({
 		},
 
 
-		invertState(item: TodoItem) {
+		invertState(item: ProConItem) {
 			item.state = !item.state;
 			this.editItem(item);
 		},
 
-		async deleteItem(item: TodoItem) {
-			await apiDelete('todoitems', item.id!);
+		async deleteItem(item: ProConItem) {
+			await apiDelete('ProConItem', item.id!);
 			this.loadList();
 		},
 

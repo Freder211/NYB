@@ -20,11 +20,18 @@
 							<v-row>
 								<v-col cols="12">
 									<v-text-field
-										label="Title*"
-										v-model="item.title"
+										label="Content*"
+										v-model="item.content"
 										:rules="nameRules"
 										required
 									></v-text-field>
+								</v-col>
+								<v-col cols="12">
+									<v-switch
+										v-model="item.state"
+										:color="`${item.state ? 'green' : 'red'}`"
+										:label="`${item.state ? 'This is a good thing' : 'this is a bad thing'}`"
+									></v-switch>
 								</v-col>
 
 							</v-row>
@@ -59,7 +66,7 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import { Todolist } from '~/models/todos'
+import { ProConItem } from '~/models/procons'
 export default Vue.extend({
 	layout: "default",
 	data() {
@@ -73,7 +80,7 @@ export default Vue.extend({
 		}
 	},
 	props: {
-		item: { type: Object, default: () => { new Todolist() } },
+		item: { type: Object, default: () => { new ProConItem() } },
 	},
 
 
