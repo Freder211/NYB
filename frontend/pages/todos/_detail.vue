@@ -10,7 +10,7 @@
 
 		<v-row :align="'start'">
 			<v-col cols="6">
-				<h1>Current todo list:
+				<h1>Current todo list: {{todolist.title}}
 				</h1>
 			</v-col>
 
@@ -90,12 +90,15 @@ export default Vue.extend({
 		const id = params.detail //param
 		const apiResponse: ApiBaseResponse = await getItems('todoitems', undefined, { tdlist_id: id });
 		const rows = apiResponse.results!;
-		return { rows }
+		const apiResponse2: Todolist = await getItems('todolists', +id);
+		const todolist = apiResponse2;
+		return { rows, todolist }
 	},
 
 	data: () => ({
 		todoid: 0,
 		rows: [] as TodoItem[],
+		todolist: new Todolist(),
 		selectedItem: new TodoItem(),
 	}),
 
