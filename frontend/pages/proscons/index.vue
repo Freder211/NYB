@@ -2,11 +2,11 @@
 	<v-container>
 
 		<!-- section header-->
-		<todos-modal
+		<proscons-modal
 			ref="modal"
 			:item="selectedItem"
 			@emitItem="editItem($event)"
-		></todos-modal>
+		></proscons-modal>
 
 		<v-data-table
 			:headers="headers"
@@ -17,7 +17,7 @@
 		>
 
 			<template v-slot:item.title="{ item }">
-				<nuxt-link :to="'/todos/' + item.id">{{ item.title }}</nuxt-link>
+				<nuxt-link :to="'/procons/' + item.id">{{ item.title }}</nuxt-link>
 
 			</template>
 
@@ -43,7 +43,7 @@
 
 			<template v-slot:top>
 				<v-toolbar flat>
-					<v-toolbar-title>TODO's</v-toolbar-title>
+					<v-toolbar-title>PRO & Cons'</v-toolbar-title>
 					<v-divider
 						class="mx-4"
 						inset
@@ -89,12 +89,12 @@
 import Vue from 'vue'
 import { apiCreate, apiDelete, apiEdit, getItems } from '~/helpers/axios-magic';
 import { ApiBaseResponse } from '~/models/communications';
-import { Todolist } from '../../models/todos'
+import { ProConList } from '~/models/procons';
 export default Vue.extend({
 	layout: "default",
 	data: () => ({
-		rows: [] as Todolist[],
-		selectedItem: new Todolist(),
+		rows: [] as ProConList[],
+		selectedItem: new ProConList(),
 		headers: [
 			{
 				text: 'Author',
@@ -103,7 +103,7 @@ export default Vue.extend({
 				value: 'author.username',
 			},
 			{
-				text: 'Todo\'s Name',
+				text: 'Item Name',
 				sortable: true,
 				align: 'center',
 				value: 'title',
@@ -133,7 +133,7 @@ export default Vue.extend({
 	}),
 
 	async asyncData() {
-		const apiResponse: ApiBaseResponse = await getItems('todolists', undefined, { crew: 1 });
+		const apiResponse: ApiBaseResponse = await getItems('proconlists', undefined, { crew: 1 });
 		const rows = apiResponse.results;
 		return { rows }
 	},
@@ -142,23 +142,23 @@ export default Vue.extend({
 
 	methods: {
 		async loadList() {
-			const apiResponse: ApiBaseResponse = await getItems('todolists', undefined, { crew: 1 });
+			const apiResponse: ApiBaseResponse = await getItems('proconlists', undefined, { crew: 1 });
 			this.rows = apiResponse.results!;
 		},
 
 
-		async editItem(item: Todolist) {
-			item.id ? await apiEdit('todolists', item) : await apiCreate('todolists', item)
+		async editItem(item: ProConList) {
+			item.id ? await apiEdit('proconlists', item) : await apiCreate('proconlists', item)
 			this.loadList();
 
 		},
 
-		handleOpen(row?: Todolist) {
+		handleOpen(row?: ProConList) {
 			if (row) {
 				this.selectedItem = { ...row }
 			}
 			else {
-				this.selectedItem = new Todolist();
+				this.selectedItem = new ProConList();
 				this.selectedItem.crew = 1;
 			}
 
@@ -166,17 +166,17 @@ export default Vue.extend({
 		},
 
 		async deleteItem(item: any) {
-			await apiDelete('todolists', item.id!);
+			await apiDelete('proconlists', item.id!);
 			this.loadList();
 		},
 
 
-		handleDelete(row: Todolist) {
+		handleDelete(row: ProConList) {
 			this.deleteItem(row)
 		},
 
 		goToDetails(event: any, itemevent: any) {
-			this.$nuxt.$router.push('/todos/' + itemevent.item!.id)
+			this.$nuxt.$router.push('/procons/' + itemevent.item!.id)
 
 		}
 
